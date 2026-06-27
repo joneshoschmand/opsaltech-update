@@ -97,7 +97,7 @@
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   /* ---------- COUNTERS ---------- */
-  const counters = document.querySelectorAll('.stat__num');
+  const counters = document.querySelectorAll('[data-count]');
   const cObs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
@@ -162,6 +162,37 @@
         a.style.marginTop = (y * d) + 'px';
       });
     });
+  }
+
+  /* ---------- SMOOTH SCROLL PARALLAX (desktop + mobile) ---------- */
+  if (!reduce) {
+    const pEls = [
+      ...document.querySelectorAll('[data-parallax]'),
+      ...document.querySelectorAll('.section-title:not([data-parallax])')
+    ].map(el => ({ el, speed: parseFloat(el.dataset.parallax) || 0.05, cur: 0, set: false }));
+
+    if (pEls.length) {
+      let running = false;
+      const frame = () => {
+        const vh = innerHeight;
+        let active = false;
+        pEls.forEach(p => {
+          const r = p.el.getBoundingClientRect();
+          if (r.bottom < -200 || r.top > vh + 200) return;       // skip off-screen
+          const center = r.top + r.height / 2 - vh / 2;
+          const target = -center * p.speed;
+          p.cur += (target - p.cur) * 0.09;                       // lerp = buttery
+          if (Math.abs(target - p.cur) > 0.15) active = true;
+          p.el.style.transform = `translate3d(0,${p.cur.toFixed(2)}px,0)`;
+        });
+        if (active) requestAnimationFrame(frame); else running = false;
+      };
+      const kick = () => { if (!running) { running = true; requestAnimationFrame(frame); } };
+      addEventListener('scroll', kick, { passive: true });
+      addEventListener('resize', kick, { passive: true });
+      addEventListener('touchmove', kick, { passive: true });
+      kick();
+    }
   }
 
   /* ---------- CONTACT FORM ---------- */
