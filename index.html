@@ -6,12 +6,15 @@
 <meta name="theme-color" content="#05060a" />
 <title>OPSALTECH — Digitale Lösungen für modernes Wachstum</title>
 <meta name="description" content="OPSALTECH ist die Agentur für Webdesign, Social Media & Content, die Marken in Wachstumsmaschinen verwandelt. Aus Willich. Für die ganze Welt." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<!-- Lokal gehostete Schriften (DSGVO: keine Google-Fonts-CDN, keine IP-Übertragung an Google) -->
+<link rel="preload" href="fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="fonts.css" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
+<a class="skip-link" href="#hero">Zum Inhalt springen</a>
 
 <!-- ============ NOISE + AURORA BACKDROP ============ -->
 <div class="backdrop" aria-hidden="true">
@@ -30,7 +33,7 @@
 <div class="scroll-progress" aria-hidden="true"></div>
 
 <!-- ============ PRELOADER ============ -->
-<div class="preloader" id="preloader">
+<div class="preloader" id="preloader" aria-hidden="true">
   <div class="preloader__inner">
     <div class="preloader__logo">OPSALTECH</div>
     <div class="preloader__bar"><span></span></div>
@@ -54,8 +57,28 @@
     <span>Projekt starten</span>
     <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </a>
-  <button class="nav__burger" id="burger" aria-label="Menü"><span></span><span></span></button>
+  <button class="nav__burger" id="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
 </header>
+
+<!-- ============ MOBILE MENU OVERLAY ============ -->
+<div class="menu" id="menu" aria-hidden="true">
+  <nav class="menu__links">
+    <a href="#leistungen"><span class="menu__idx">01</span><span class="menu__txt">Leistungen</span></a>
+    <a href="#warum"><span class="menu__idx">02</span><span class="menu__txt">Warum wir</span></a>
+    <a href="#arbeiten"><span class="menu__idx">03</span><span class="menu__txt">Referenzen</span></a>
+    <a href="#team"><span class="menu__idx">04</span><span class="menu__txt">Team</span></a>
+    <a href="#prozess"><span class="menu__idx">05</span><span class="menu__txt">Prozess</span></a>
+  </nav>
+  <a href="#kontakt" class="btn btn--primary btn--xl menu__cta">
+    <span>Projekt starten</span>
+    <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <div class="menu__foot">
+    <a href="mailto:info@opsaltech.com">info@opsaltech.com</a>
+    <span>·</span>
+    <a href="tel:+4917664262666">0176 64262666</a>
+  </div>
+</div>
 
 <!-- ============ HERO ============ -->
 <main>
@@ -212,9 +235,13 @@
         <span class="browser__url"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>herz-licht-alltagshilfe.de</span>
         <a class="browser__open" href="https://herz-licht-alltagshilfe.de" target="_blank" rel="noopener" data-cursor="hover" aria-label="Herz &amp; Licht live öffnen">Live ↗</a>
       </div>
-      <div class="browser__view browser__view--live">
-        <iframe src="https://herz-licht-alltagshilfe.de" title="Herz &amp; Licht Alltagshilfe — Website von OPSALTECH" loading="lazy"></iframe>
-        <span class="browser__hint">● live · scroll im Fenster</span>
+      <div class="browser__view browser__view--live" data-embed="https://herz-licht-alltagshilfe.de" data-embed-title="Herz &amp; Licht Alltagshilfe — Website von OPSALTECH">
+        <div class="browser__consent">
+          <svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          <h4>Externe Live-Vorschau</h4>
+          <p>Hier wird die Website <strong>herz-licht-alltagshilfe.de</strong> live eingebettet. Beim Laden werden Daten (u.&nbsp;a. deine IP-Adresse) an den externen Anbieter übertragen. Es gilt dessen Datenschutzerklärung.</p>
+          <button class="btn btn--primary browser__load" type="button">Live-Vorschau laden</button>
+        </div>
       </div>
       <div class="browser__cap"><strong>Herz &amp; Licht Alltagshilfe</strong><span>Webdesign &amp; Conversion · live im Fenster</span></div>
     </article>
@@ -437,6 +464,7 @@
         <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
       <p class="cta__success" id="formSuccess">✦ Danke! Deine Anfrage ist raus — wir melden uns blitzschnell.</p>
+      <p class="cta__note">Mit dem Absenden öffnet sich dein E-Mail-Programm — es werden <strong>keine Daten auf diesem Server gespeichert</strong>. Mehr in der <a href="#" data-legal="datenschutz">Datenschutzerklärung</a>.</p>
     </form>
 
     <div class="cta__direct">
@@ -474,12 +502,119 @@
   <div class="footer__bottom">
     <span>© 2026 OPSALTECH · Hoschmand/Springmeier GbR</span>
     <div class="footer__legal">
-      <a href="#" data-cursor="hover">Impressum</a>
-      <a href="#" data-cursor="hover">Datenschutz</a>
+      <a href="#" data-legal="impressum" data-cursor="hover">Impressum</a>
+      <a href="#" data-legal="datenschutz" data-cursor="hover">Datenschutz</a>
     </div>
     <button class="footer__top magnetic" data-cursor="hover" id="toTop">Nach oben ↑</button>
   </div>
 </footer>
+
+<!-- ============ BEDIENUNGSHILFE (ACCESSIBILITY) ============ -->
+<div class="a11y">
+  <button class="a11y__toggle" id="a11yToggle" aria-expanded="false" aria-controls="a11yPanel" aria-label="Bedienungshilfe öffnen" title="Bedienungshilfe">
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><circle cx="12" cy="4" r="2" fill="currentColor"/><path d="M12 7v6m0 0l-4 5m4-5l4 5M5 8.5c2 1 4.5 1.5 7 1.5s5-.5 7-1.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <div class="a11y__panel" id="a11yPanel" role="dialog" aria-label="Bedienungshilfe" aria-hidden="true">
+    <div class="a11y__head">
+      <h3>Bedienungshilfe</h3>
+      <button class="a11y__close" id="a11yClose" aria-label="Bedienungshilfe schließen">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="a11y__row">
+      <span class="a11y__label">Textgröße</span>
+      <div class="a11y__stepper">
+        <button data-a11y="font-dec" aria-label="Text verkleinern">A−</button>
+        <span class="a11y__val" id="a11yFontVal" aria-live="polite">100%</span>
+        <button data-a11y="font-inc" aria-label="Text vergrößern">A+</button>
+      </div>
+    </div>
+    <button class="a11y__opt" data-a11y="contrast" aria-pressed="false"><span>Hoher Kontrast</span></button>
+    <button class="a11y__opt" data-a11y="links" aria-pressed="false"><span>Links hervorheben</span></button>
+    <button class="a11y__opt" data-a11y="readable" aria-pressed="false"><span>Bessere Lesbarkeit</span></button>
+    <button class="a11y__opt" data-a11y="nomotion" aria-pressed="false"><span>Animationen stoppen</span></button>
+    <button class="a11y__reset" data-a11y="reset">Alles zurücksetzen</button>
+  </div>
+</div>
+
+<!-- ============ LEGAL MODAL ============ -->
+<div class="legal" id="legal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
+  <div class="legal__overlay" data-legal-close></div>
+  <div class="legal__panel" role="document">
+    <div class="legal__head">
+      <h3 id="legalTitle" class="legal__title">Impressum</h3>
+      <button class="legal__close" data-legal-close aria-label="Schließen">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="legal__body" id="legalBody" tabindex="0"></div>
+  </div>
+</div>
+
+<!-- Legal content sources (hidden, injected into the modal) -->
+<div class="legal-src" id="legal-impressum" hidden>
+  <h4>Angaben gemäß § 5 TMG</h4>
+  <p>Hoschmand/Springmeier GbR<br />Karlstraße 26a<br />47877 Willich</p>
+  <h4>Vertreten durch</h4>
+  <p>Niclas Springmeier</p>
+  <h4>Kontakt</h4>
+  <p>E-Mail: <a href="mailto:info@opsaltech.com">info@opsaltech.com</a><br />Telefon: <a href="tel:+4917664262666">0176 64262666</a></p>
+  <h4>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h4>
+  <p>OPSALTECH</p>
+  <h4>Umsatzsteuer-ID</h4>
+  <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />DE363229767</p>
+</div>
+
+<div class="legal-src" id="legal-datenschutz" hidden>
+  <h4>1. Datenschutz auf einen Blick</h4>
+  <h5>Allgemeine Hinweise</h5>
+  <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können. Ausführliche Informationen zum Thema Datenschutz entnehmen Sie unserer unter diesem Text aufgeführten Datenschutzerklärung.</p>
+  <h5>Datenerfassung auf dieser Website</h5>
+  <p><strong>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</strong><br />Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem Abschnitt „Hinweis zur Verantwortlichen Stelle“ in dieser Datenschutzerklärung entnehmen.</p>
+  <p><strong>Wie erfassen wir Ihre Daten?</strong><br />Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z. B. um Daten handeln, die Sie in ein Kontaktformular eingeben. Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z. B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs). Die Erfassung dieser Daten erfolgt automatisch, sobald Sie diese Website betreten.</p>
+  <p><strong>Wofür nutzen wir Ihre Daten?</strong><br />Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden.</p>
+  <p><strong>Welche Rechte haben Sie bezüglich Ihrer Daten?</strong><br />Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. Wenn Sie eine Einwilligung zur Datenverarbeitung erteilt haben, können Sie diese Einwilligung jederzeit für die Zukunft widerrufen. Außerdem haben Sie das Recht, unter bestimmten Umständen die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen. Des Weiteren steht Ihnen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu. Hierzu sowie zu weiteren Fragen zum Thema Datenschutz können Sie sich jederzeit an uns wenden.</p>
+
+  <h4>2. Hosting</h4>
+  <p>Wir hosten die Inhalte unserer Website bei folgendem Anbieter: Netlify.</p>
+  <p>Anbieter ist die Netlify, Inc., 512 2nd Street, Suite 200, San Francisco, CA 94107, USA. Wenn Sie unsere Website besuchen, erfasst Netlify verschiedene Logfiles inklusive Ihrer IP-Adressen. Details entnehmen Sie der Datenschutzerklärung von Netlify: <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener">netlify.com/privacy</a>.</p>
+  <p>Die Verwendung von Netlify erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Wir haben ein berechtigtes Interesse an einer möglichst zuverlässigen Darstellung unserer Website. Die Datenübermittlung in die USA wird auf das EU-U.S. Data Privacy Framework sowie auf Standardvertragsklauseln gestützt. Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TTDSG. Die Einwilligung ist jederzeit widerrufbar.</p>
+  <p><em>Hinweis: Bitte den tatsächlichen Hosting-Anbieter vor Veröffentlichung bestätigen und ggf. anpassen.</em></p>
+
+  <h4>2a. Schriftarten (lokal gehostet)</h4>
+  <p>Diese Website nutzt zur einheitlichen Darstellung von Schriftarten lokal auf unserem Server gespeicherte Schriften. Es werden <strong>keine Verbindungen zu Servern von Google</strong> (Google Fonts) oder anderen Drittanbietern aufgebaut; Ihre IP-Adresse wird hierfür nicht an Dritte übermittelt.</p>
+
+  <h4>2b. Einbindung externer Inhalte (Live-Vorschau)</h4>
+  <p>Im Bereich „Referenzen“ bieten wir eine optionale Live-Vorschau externer Websites an. Diese externen Inhalte werden <strong>erst nach Ihrem aktiven Klick</strong> geladen (Zwei-Klick-Lösung). Erst dann werden Daten – insbesondere Ihre IP-Adresse – an den jeweiligen Anbieter der externen Website übertragen. Vor dem Klick findet keine Datenübertragung an diese Anbieter statt. Für die geladenen Inhalte gilt die Datenschutzerklärung des jeweiligen Anbieters.</p>
+
+  <h4>3. Allgemeine Hinweise und Pflichtinformationen</h4>
+  <h5>Datenschutz</h5>
+  <p>Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung. Wenn Sie diese Website benutzen, werden verschiedene personenbezogene Daten erhoben. Personenbezogene Daten sind Daten, mit denen Sie persönlich identifiziert werden können. Die vorliegende Datenschutzerklärung erläutert, welche Daten wir erheben und wofür wir sie nutzen. Sie erläutert auch, wie und zu welchem Zweck das geschieht. Wir weisen darauf hin, dass die Datenübertragung im Internet (z. B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.</p>
+  <h5>Hinweis zur verantwortlichen Stelle</h5>
+  <p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
+  <p>Hoschmand/Springmeier GbR<br />Karlstraße 26a<br />47877 Willich<br />Telefon: 0176 64262666<br />E-Mail: info@opsaltech.com</p>
+  <p>Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten (z. B. Namen, E-Mail-Adressen o. Ä.) entscheidet.</p>
+  <h5>Speicherdauer</h5>
+  <p>Soweit innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck für die Datenverarbeitung entfällt. Wenn Sie ein berechtigtes Löschersuchen geltend machen oder eine Einwilligung zur Datenverarbeitung widerrufen, werden Ihre Daten gelöscht, sofern wir keine anderen rechtlich zulässigen Gründe für die Speicherung Ihrer personenbezogenen Daten haben (z. B. steuer- oder handelsrechtliche Aufbewahrungsfristen); im letztgenannten Fall erfolgt die Löschung nach Fortfall dieser Gründe.</p>
+  <h5>Allgemeine Hinweise zu den Rechtsgrundlagen der Datenverarbeitung</h5>
+  <p>Sofern Sie in die Datenverarbeitung eingewilligt haben, verarbeiten wir Ihre personenbezogenen Daten auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO bzw. Art. 9 Abs. 2 lit. a DSGVO. Die Einwilligung ist jederzeit widerrufbar. Sind Ihre Daten zur Vertragserfüllung oder zur Durchführung vorvertraglicher Maßnahmen erforderlich, verarbeiten wir Ihre Daten auf Grundlage des Art. 6 Abs. 1 lit. b DSGVO. Des Weiteren verarbeiten wir Ihre Daten, sofern diese zur Erfüllung einer rechtlichen Verpflichtung erforderlich sind, auf Grundlage von Art. 6 Abs. 1 lit. c DSGVO. Die Datenverarbeitung kann ferner auf Grundlage unseres berechtigten Interesses nach Art. 6 Abs. 1 lit. f DSGVO erfolgen.</p>
+  <h5>Widerruf Ihrer Einwilligung zur Datenverarbeitung</h5>
+  <p>Viele Datenverarbeitungsvorgänge sind nur mit Ihrer ausdrücklichen Einwilligung möglich. Sie können eine bereits erteilte Einwilligung jederzeit widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Datenverarbeitung bleibt vom Widerruf unberührt.</p>
+  <h5>Widerspruchsrecht gegen die Datenerhebung in besonderen Fällen sowie gegen Direktwerbung (Art. 21 DSGVO)</h5>
+  <p>Wenn die Datenverarbeitung auf Grundlage von Art. 6 Abs. 1 lit. e oder f DSGVO erfolgt, haben Sie jederzeit das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, gegen die Verarbeitung Ihrer personenbezogenen Daten Widerspruch einzulegen. Werden Ihre personenbezogenen Daten verarbeitet, um Direktwerbung zu betreiben, so haben Sie das Recht, jederzeit Widerspruch gegen die Verarbeitung Sie betreffender personenbezogener Daten zum Zwecke derartiger Werbung einzulegen.</p>
+  <h5>Beschwerderecht bei der zuständigen Aufsichtsbehörde</h5>
+  <p>Im Falle von Verstößen gegen die DSGVO steht den Betroffenen ein Beschwerderecht bei einer Aufsichtsbehörde zu.</p>
+  <h5>SSL- bzw. TLS-Verschlüsselung</h5>
+  <p>Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte eine SSL- bzw. TLS-Verschlüsselung. Bei verschlüsselter Kommunikation können Ihre Zahlungsdaten, die Sie an uns übermitteln, nicht von Dritten mitgelesen werden.</p>
+
+  <h4>4. Datenerfassung auf dieser Website</h4>
+  <h5>Cookies &amp; lokaler Speicher</h5>
+  <p>Diese Website setzt <strong>keine Tracking- oder Marketing-Cookies</strong> und bindet keine Analyse- oder Werbedienste ein. Lediglich für die Funktion „Bedienungshilfe“ werden Ihre gewählten Einstellungen (z. B. Textgröße, Kontrast) ausschließlich <strong>lokal in Ihrem Browser (localStorage)</strong> gespeichert. Diese Angaben verbleiben auf Ihrem Endgerät, werden nicht an uns oder Dritte übertragen und dienen allein Ihrem Bedienkomfort. Sie können diese jederzeit über die Funktion „Alles zurücksetzen“ oder durch Löschen der Browserdaten entfernen. Allgemein können Sie Ihren Browser so einstellen, dass Sie über das Setzen von Cookies informiert werden, Cookies nur im Einzelfall erlauben oder generell ausschließen.</p>
+  <h5>Server-Log-Dateien</h5>
+  <p>Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt (Browsertyp, Betriebssystem, Referrer URL, Hostname, Uhrzeit, IP-Adresse). Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen.</p>
+  <h5>Kontaktformular &amp; Anfrage per E-Mail oder Telefon</h5>
+  <p>Wenn Sie uns per Kontaktformular, E-Mail oder Telefon kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten zwecks Bearbeitung der Anfrage bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter. Die Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt.</p>
+</div>
 
 <script src="script.js"></script>
 </body>

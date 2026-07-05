@@ -62,23 +62,22 @@
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* ---------- BURGER (simple toggle to nav links) ---------- */
+  /* ---------- MOBILE MENU ---------- */
   const burger = document.getElementById('burger');
-  const links = document.querySelector('.nav__links');
-  burger?.addEventListener('click', () => {
-    const open = links.style.display === 'flex';
-    links.style.display = open ? '' : 'flex';
-    if (!open) {
-      Object.assign(links.style, {
-        position: 'fixed', inset: '70px 16px auto', flexDirection: 'column',
-        gap: '8px', background: 'rgba(10,12,20,.92)', backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255,255,255,.08)', borderRadius: '18px', padding: '20px'
-      });
-    }
-  });
-  links?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    if (innerWidth <= 900) links.style.display = '';
-  }));
+  const menu = document.getElementById('menu');
+  const setMenu = (open) => {
+    nav.classList.toggle('menu-open', open);
+    menu.classList.toggle('open', open);
+    document.body.classList.toggle('menu-open', open);
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+  };
+  burger?.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
+  menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  addEventListener('keydown', e => { if (e.key === 'Escape' && menu.classList.contains('open')) setMenu(false); });
+  // auto-close if resized up to desktop
+  addEventListener('resize', () => { if (innerWidth > 900 && menu.classList.contains('open')) setMenu(false); });
 
   /* ---------- REVEAL ON SCROLL ---------- */
   const io = new IntersectionObserver((entries) => {
@@ -240,6 +239,111 @@
     addEventListener('resize', onScrollStmt, { passive: true });
     paint();
   }
+
+  /* ---------- BEDIENUNGSHILFE (accessibility widget) ---------- */
+  (function a11yWidget() {
+    const wrap = document.querySelector('.a11y');
+    const toggle = document.getElementById('a11yToggle');
+    const closeBtn = document.getElementById('a11yClose');
+    const panel = document.getElementById('a11yPanel');
+    const fontVal = document.getElementById('a11yFontVal');
+    if (!wrap || !toggle) return;
+    const STEPS = [1, 1.1, 1.25, 1.4];
+    const modes = ['contrast', 'links', 'readable', 'nomotion'];
+    const store = {
+      get(k, d) { try { const v = localStorage.getItem('a11y_' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+      set(k, v) { try { localStorage.setItem('a11y_' + k, JSON.stringify(v)); } catch { } }
+    };
+    let fontIdx = Math.min(Math.max(store.get('font', 0) | 0, 0), STEPS.length - 1);
+
+    const applyFont = () => {
+      document.body.style.zoom = STEPS[fontIdx] === 1 ? '' : STEPS[fontIdx];
+      fontVal.textContent = Math.round(STEPS[fontIdx] * 100) + '%';
+      store.set('font', fontIdx);
+    };
+    const applyMode = (m, on) => {
+      document.documentElement.classList.toggle('a11y-' + m, on);
+      const b = wrap.querySelector('[data-a11y="' + m + '"]');
+      if (b) b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      store.set(m, on);
+    };
+    // restore saved preferences
+    modes.forEach(m => applyMode(m, store.get(m, false) === true));
+    applyFont();
+
+    const openPanel = (o) => {
+      wrap.classList.toggle('open', o);
+      toggle.setAttribute('aria-expanded', o ? 'true' : 'false');
+      panel.setAttribute('aria-hidden', o ? 'false' : 'true');
+    };
+    toggle.addEventListener('click', () => openPanel(!wrap.classList.contains('open')));
+    closeBtn?.addEventListener('click', () => openPanel(false));
+    addEventListener('keydown', e => { if (e.key === 'Escape' && wrap.classList.contains('open')) { openPanel(false); toggle.focus(); } });
+    addEventListener('click', e => { if (wrap.classList.contains('open') && !wrap.contains(e.target)) openPanel(false); });
+
+    wrap.querySelectorAll('[data-a11y]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const act = btn.getAttribute('data-a11y');
+        if (act === 'font-inc') { fontIdx = Math.min(fontIdx + 1, STEPS.length - 1); applyFont(); }
+        else if (act === 'font-dec') { fontIdx = Math.max(fontIdx - 1, 0); applyFont(); }
+        else if (act === 'reset') { fontIdx = 0; applyFont(); modes.forEach(m => applyMode(m, false)); }
+        else if (modes.includes(act)) { applyMode(act, !document.documentElement.classList.contains('a11y-' + act)); }
+      });
+    });
+  })();
+
+  /* ---------- CLICK-TO-LOAD EMBED (DSGVO two-click) ---------- */
+  document.querySelectorAll('.browser__load').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const view = btn.closest('[data-embed]');
+      if (!view) return;
+      const iframe = document.createElement('iframe');
+      iframe.src = view.getAttribute('data-embed');
+      iframe.title = view.getAttribute('data-embed-title') || 'Externe Website';
+      iframe.loading = 'lazy';
+      iframe.setAttribute('referrerpolicy', 'no-referrer');
+      view.innerHTML = '';
+      view.appendChild(iframe);
+      const hint = document.createElement('span');
+      hint.className = 'browser__hint';
+      hint.textContent = '● live · scroll im Fenster';
+      view.appendChild(hint);
+    });
+  });
+
+  /* ---------- LEGAL MODAL ---------- */
+  const legal = document.getElementById('legal');
+  const legalBody = document.getElementById('legalBody');
+  const legalTitle = document.getElementById('legalTitle');
+  const legalTitles = { impressum: 'Impressum', datenschutz: 'Datenschutzerklärung' };
+  let legalTrigger = null;
+  const openLegal = (key) => {
+    const src = document.getElementById('legal-' + key);
+    if (!src || !legal) return;
+    legalBody.innerHTML = src.innerHTML;
+    legalBody.scrollTop = 0;
+    legalTitle.textContent = legalTitles[key] || 'Rechtliches';
+    legal.classList.add('open');
+    legal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('legal-open');
+    legal.querySelector('.legal__close')?.focus();   // move focus into dialog
+  };
+  const closeLegal = () => {
+    if (!legal) return;
+    legal.classList.remove('open');
+    legal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('legal-open');
+    legalTrigger?.focus();                            // return focus to trigger
+    legalTrigger = null;
+  };
+  document.querySelectorAll('[data-legal]').forEach(el => el.addEventListener('click', e => {
+    e.preventDefault();
+    legalTrigger = el;
+    if (innerWidth <= 900) setMenu(false);   // close mobile menu if open
+    openLegal(el.getAttribute('data-legal'));
+  }));
+  legal?.querySelectorAll('[data-legal-close]').forEach(el => el.addEventListener('click', closeLegal));
+  addEventListener('keydown', e => { if (e.key === 'Escape' && legal?.classList.contains('open')) closeLegal(); });
 
   /* ---------- TO TOP ---------- */
   document.getElementById('toTop')?.addEventListener('click', () =>
