@@ -292,6 +292,71 @@
     });
   })();
 
+  /* ---------- COOKIE / CONSENT BANNER ---------- */
+  (function cookieConsent() {
+    const bar = document.getElementById('cookie');
+    if (!bar) return;
+    const settings = document.getElementById('cookieSettings');
+    const inner = bar.querySelector('.cookie__inner');
+    inner?.setAttribute('tabindex', '-1');
+    const KEY = 'opsal_consent';
+    const read = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch { return null; } };
+    const q = (sel) => bar.querySelector(sel);
+    const btnSettings = q('[data-cookie="settings"]');
+    const btnSave = q('[data-cookie="save"]');
+
+    const expand = (on) => {
+      settings.hidden = !on;
+      if (btnSettings) btnSettings.hidden = on;
+      if (btnSave) btnSave.hidden = !on;
+    };
+    const show = (openSettings) => {
+      bar.classList.add('show');
+      bar.setAttribute('aria-hidden', 'false');
+      expand(!!openSettings);
+      inner?.focus();
+    };
+    const hide = () => { bar.classList.remove('show'); bar.setAttribute('aria-hidden', 'true'); };
+
+    // activate any consent-gated scripts (future analytics etc.)
+    const applyConsent = (c) => {
+      ['statistics', 'marketing'].forEach(cat => {
+        if (!c[cat]) return;
+        document.querySelectorAll('script[type="text/plain"][data-consent="' + cat + '"]').forEach(s => {
+          const ns = document.createElement('script');
+          if (s.dataset.src) ns.src = s.dataset.src; else ns.textContent = s.textContent;
+          [...s.attributes].forEach(a => { if (!['type', 'data-consent', 'data-src'].includes(a.name)) ns.setAttribute(a.name, a.value); });
+          s.parentNode.replaceChild(ns, s);
+        });
+      });
+      window.OpsalConsent = { get: () => c };
+      document.dispatchEvent(new CustomEvent('consent:updated', { detail: c }));
+    };
+    const persist = (statistics, marketing) => {
+      const c = { necessary: true, statistics: !!statistics, marketing: !!marketing, ts: new Date().toISOString() };
+      try { localStorage.setItem(KEY, JSON.stringify(c)); } catch { }
+      applyConsent(c);
+      hide();
+    };
+
+    q('[data-cookie="accept"]')?.addEventListener('click', () => persist(true, true));
+    q('[data-cookie="reject"]')?.addEventListener('click', () => persist(false, false));
+    btnSettings?.addEventListener('click', () => expand(true));
+    btnSave?.addEventListener('click', () => persist(q('[data-cat="statistics"]')?.checked, q('[data-cat="marketing"]')?.checked));
+
+    document.querySelectorAll('[data-cookie="open"]').forEach(el => el.addEventListener('click', e => {
+      e.preventDefault();
+      const c = read() || {};
+      const st = q('[data-cat="statistics"]'); if (st) st.checked = !!c.statistics;
+      const mk = q('[data-cat="marketing"]'); if (mk) mk.checked = !!c.marketing;
+      show(true);
+    }));
+
+    const existing = read();
+    if (existing && existing.necessary) applyConsent(existing);
+    else setTimeout(() => show(false), 1200);
+  })();
+
   /* ---------- CLICK-TO-LOAD EMBED (DSGVO two-click) ---------- */
   document.querySelectorAll('.browser__load').forEach(btn => {
     btn.addEventListener('click', () => {

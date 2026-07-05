@@ -504,10 +504,43 @@
     <div class="footer__legal">
       <a href="#" data-legal="impressum" data-cursor="hover">Impressum</a>
       <a href="#" data-legal="datenschutz" data-cursor="hover">Datenschutz</a>
+      <a href="#" data-cookie="open" data-cursor="hover">Cookie-Einstellungen</a>
     </div>
     <button class="footer__top magnetic" data-cursor="hover" id="toTop">Nach oben ↑</button>
   </div>
 </footer>
+
+<!-- ============ COOKIE / CONSENT BANNER ============ -->
+<div class="cookie" id="cookie" role="dialog" aria-label="Datenschutz-Einstellungen" aria-hidden="true">
+  <div class="cookie__inner">
+    <div class="cookie__main">
+      <h3>🍪 Datenschutz &amp; Cookies</h3>
+      <p>Wir verwenden nur <strong>technisch notwendige</strong> Speicherung, damit diese Website funktioniert. Optionale Cookies für Statistik oder Marketing setzen wir ausschließlich mit deiner Einwilligung. Details in der <a href="#" data-legal="datenschutz">Datenschutzerklärung</a>.</p>
+    </div>
+
+    <div class="cookie__settings" id="cookieSettings" hidden>
+      <div class="cookie__cat">
+        <div class="cookie__catinfo"><strong>Notwendig</strong><span>Für den Betrieb der Website erforderlich (z.&nbsp;B. Bedienungshilfe-Einstellungen). Immer aktiv.</span></div>
+        <label class="cookie__switch cookie__switch--locked"><input type="checkbox" checked disabled aria-label="Notwendig – immer aktiv" /><span></span></label>
+      </div>
+      <div class="cookie__cat">
+        <div class="cookie__catinfo"><strong>Statistik</strong><span>Anonyme Reichweitenmessung. Derzeit nicht aktiv – vorbereitet für die Zukunft.</span></div>
+        <label class="cookie__switch"><input type="checkbox" data-cat="statistics" /><span></span></label>
+      </div>
+      <div class="cookie__cat">
+        <div class="cookie__catinfo"><strong>Marketing</strong><span>Personalisierte Inhalte &amp; Anzeigen. Derzeit nicht aktiv – vorbereitet für die Zukunft.</span></div>
+        <label class="cookie__switch"><input type="checkbox" data-cat="marketing" /><span></span></label>
+      </div>
+    </div>
+
+    <div class="cookie__actions">
+      <button type="button" class="cookie__btn cookie__btn--ghost" data-cookie="settings">Einstellungen</button>
+      <button type="button" class="cookie__btn cookie__btn--ghost" data-cookie="reject">Ablehnen</button>
+      <button type="button" class="cookie__btn cookie__btn--primary" data-cookie="accept">Alle akzeptieren</button>
+      <button type="button" class="cookie__btn cookie__btn--primary" data-cookie="save" hidden>Auswahl speichern</button>
+    </div>
+  </div>
+</div>
 
 <!-- ============ BEDIENUNGSHILFE (ACCESSIBILITY) ============ -->
 <div class="a11y">
