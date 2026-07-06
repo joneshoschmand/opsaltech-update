@@ -410,6 +410,23 @@
   legal?.querySelectorAll('[data-legal-close]').forEach(el => el.addEventListener('click', closeLegal));
   addEventListener('keydown', e => { if (e.key === 'Escape' && legal?.classList.contains('open')) closeLegal(); });
 
+  /* ---------- FOOTER WORDMARK (letter-by-letter rise) ---------- */
+  const fbig = document.querySelector('.footer__big');
+  if (fbig) {
+    const chars = (fbig.textContent || '').trim().split('');
+    fbig.textContent = '';
+    chars.forEach((ch, i) => {
+      const s = document.createElement('span');
+      s.className = 'fb-l';
+      s.textContent = ch;
+      s.style.transitionDelay = (i * 70) + 'ms';
+      fbig.appendChild(s);
+    });
+    new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => { if (e.isIntersecting) { fbig.classList.add('lit'); obs.unobserve(fbig); } });
+    }, { threshold: 0.25 }).observe(fbig);
+  }
+
   /* ---------- TO TOP ---------- */
   document.getElementById('toTop')?.addEventListener('click', () =>
     scrollTo({ top: 0, behavior: 'smooth' }));
