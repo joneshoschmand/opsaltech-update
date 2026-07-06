@@ -3,9 +3,38 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="theme-color" content="#05060a" />
-<title>OPSALTECH — Digitale Lösungen für modernes Wachstum</title>
-<meta name="description" content="OPSALTECH ist die Agentur für Webdesign, Social Media & Content, die Marken in Wachstumsmaschinen verwandelt. Aus Willich. Für die ganze Welt." />
+<meta name="theme-color" content="#03050c" />
+
+<title>Webdesign &amp; Social-Media-Agentur Willich | OPSALTECH</title>
+<meta name="description" content="OPSALTECH — deine Agentur aus Willich für Webdesign, Social Media Marketing &amp; Content Creation. Moderne Websites, mehr Reichweite und messbares Wachstum." />
+<meta name="keywords" content="Webdesign Willich, Social Media Marketing, Content Creation, Webdesign Agentur, Online Marketing, Werbeagentur NRW, Performance Marketing, OPSALTECH" />
+<meta name="author" content="OPSALTECH — Hoschmand/Springmeier GbR" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<meta name="geo.region" content="DE-NW" />
+<meta name="geo.placename" content="Willich" />
+<link rel="canonical" href="https://www.opsaltech.de/" />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="apple-touch-icon" href="favicon.svg" />
+
+<!-- Open Graph (Facebook, LinkedIn, WhatsApp …) -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="OPSALTECH" />
+<meta property="og:locale" content="de_DE" />
+<meta property="og:title" content="Webdesign &amp; Social-Media-Agentur Willich | OPSALTECH" />
+<meta property="og:description" content="Deine Agentur aus Willich für Webdesign, Social Media Marketing &amp; Content Creation. Moderne Websites, mehr Reichweite, messbares Wachstum." />
+<meta property="og:url" content="https://www.opsaltech.de/" />
+<meta property="og:image" content="https://www.opsaltech.de/images/logo.png" />
+<meta property="og:image:width" content="1024" />
+<meta property="og:image:height" content="576" />
+<meta property="og:image:alt" content="OPSALTECH Logo" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Webdesign &amp; Social-Media-Agentur Willich | OPSALTECH" />
+<meta name="twitter:description" content="Webdesign, Social Media Marketing &amp; Content Creation aus Willich — für messbares Wachstum." />
+<meta name="twitter:image" content="https://www.opsaltech.de/images/logo.png" />
 <!-- Lokal gehostete Schriften (DSGVO: keine Google-Fonts-CDN, keine IP-Übertragung an Google) -->
 <link rel="preload" href="fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
@@ -46,7 +75,7 @@
   <a href="#hero" class="nav__brand" data-cursor="hover">
     <span class="nav__mark"></span>OPSALTECH
   </a>
-  <nav class="nav__links">
+  <nav class="nav__links" aria-label="Hauptnavigation">
     <a href="#leistungen" data-cursor="hover">Leistungen</a>
     <a href="#warum" data-cursor="hover">Warum wir</a>
     <a href="#arbeiten" data-cursor="hover">Referenzen</a>
@@ -449,7 +478,7 @@
     <form class="cta__form" id="contactForm" action="https://formspree.io/f/mnjkrqrz" method="POST" novalidate>
       <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0" />
       <input type="hidden" name="leistungen" id="svcField" />
-      <div class="field">
+      <div class="field field--full">
         <input type="text" id="name" name="name" required placeholder=" " autocomplete="name" data-cursor="hover" />
         <label for="name">Dein Name</label>
       </div>
@@ -457,7 +486,11 @@
         <input type="email" id="email" name="email" required placeholder=" " autocomplete="email" data-cursor="hover" />
         <label for="email">E-Mail</label>
       </div>
-      <div class="field--full services">
+      <div class="field">
+        <input type="tel" id="phone" name="phone" required placeholder=" " autocomplete="tel" data-cursor="hover" />
+        <label for="phone">Telefonnummer</label>
+      </div>
+      <div class="field--full form-svc">
         <span class="services__label">Woran bist du interessiert? <span class="services__hint">(Mehrfachauswahl möglich)</span></span>
         <div class="chips" role="group" aria-label="Gewünschte Leistungen">
           <button type="button" class="chip" data-service="Webdesign" aria-pressed="false">Webdesign</button>
@@ -468,8 +501,8 @@
         </div>
       </div>
       <div class="field field--full">
-        <textarea id="msg" name="message" rows="3" required placeholder=" " data-cursor="hover"></textarea>
-        <label for="msg">Worum geht's?</label>
+        <textarea id="msg" name="message" rows="3" placeholder=" " data-cursor="hover"></textarea>
+        <label for="msg">Worum geht's? (optional)</label>
       </div>
       <label class="consent" for="consent">
         <input type="checkbox" id="consent" required />
@@ -667,6 +700,65 @@
   <p>Wenn Sie uns per Kontaktformular, E-Mail oder Telefon kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten zwecks Bearbeitung der Anfrage bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter. Die Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt.</p>
   <p>Für den technischen Versand unseres Kontaktformulars nutzen wir den Dienst <strong>Formspree</strong> (Formspree, Inc., 2093 Philadelphia Pike #1131, Claymont, DE 19703, USA). Wenn Sie das Formular absenden, werden die von Ihnen eingegebenen Daten (Name, E-Mail-Adresse, ausgewählte Leistungen und Nachricht) an Formspree übermittelt, dort verarbeitet und als E-Mail an uns weitergeleitet. Die Verarbeitung erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die Sie vor dem Absenden aktiv erteilen, sowie zur Durchführung vorvertraglicher Maßnahmen (Art. 6 Abs. 1 lit. b DSGVO). Die Übermittlung in die USA wird auf das EU-U.S. Data Privacy Framework bzw. Standardvertragsklauseln gestützt. Weitere Informationen: <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener">formspree.io/legal/privacy-policy</a>. Ihre Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen.</p>
 </div>
+
+<!-- Structured data for search engines -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://www.opsaltech.de/#organization",
+      "name": "OPSALTECH",
+      "legalName": "Hoschmand/Springmeier GbR",
+      "url": "https://www.opsaltech.de/",
+      "logo": "https://www.opsaltech.de/images/logo.png",
+      "image": "https://www.opsaltech.de/images/logo.png",
+      "description": "Agentur für Webdesign, Social Media Marketing und Content Creation aus Willich. Moderne Websites, mehr Reichweite und messbares Wachstum.",
+      "email": "info@opsaltech.com",
+      "telephone": "+4917664262666",
+      "vatID": "DE363229767",
+      "priceRange": "€€",
+      "currenciesAccepted": "EUR",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Karlstraße 26a",
+        "postalCode": "47877",
+        "addressLocality": "Willich",
+        "addressRegion": "Nordrhein-Westfalen",
+        "addressCountry": "DE"
+      },
+      "areaServed": { "@type": "Country", "name": "Deutschland" },
+      "founder": [
+        { "@type": "Person", "name": "Jones Hoschmand", "jobTitle": "Founder & Digital Strategist" },
+        { "@type": "Person", "name": "Niclas Springmeier", "jobTitle": "Co-Founder & Marketing Specialist" }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/opsaltech/",
+        "https://www.linkedin.com/company/opsaltech/"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Leistungen",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Webdesign & Development" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Social Media Marketing" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Content Creation" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Performance Marketing" } }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.opsaltech.de/#website",
+      "url": "https://www.opsaltech.de/",
+      "name": "OPSALTECH",
+      "inLanguage": "de-DE",
+      "publisher": { "@id": "https://www.opsaltech.de/#organization" }
+    }
+  ]
+}
+</script>
 
 <script src="script.js"></script>
 </body>

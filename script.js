@@ -209,13 +209,14 @@
     const btnLabel = submitBtn?.querySelector('.btn__label');
     const name = form.querySelector('#name').value.trim();
     const email = form.querySelector('#email').value.trim();
-    const msg = form.querySelector('#msg').value.trim();
+    const phone = form.querySelector('#phone').value.trim();
     const services = chips.filter(c => c.getAttribute('aria-pressed') === 'true').map(c => c.dataset.service);
 
     let invalid = false;
-    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !msg) {
-      form.querySelectorAll('#name,#email,#msg').forEach(f => {
-        if (!f.value.trim()) { f.style.borderColor = '#ff8aa6'; setTimeout(() => f.style.borderColor = '', 1800); }
+    const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+    if (!name || !emailOk || !phone) {
+      form.querySelectorAll('#name,#email,#phone').forEach(f => {
+        if (!f.value.trim() || (f.id === 'email' && !emailOk)) { f.style.borderColor = '#ff8aa6'; setTimeout(() => f.style.borderColor = '', 1800); }
       });
       invalid = true;
     }

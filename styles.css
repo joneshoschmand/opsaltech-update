@@ -442,8 +442,8 @@ html.a11y-nomotion .footer__big .fb-l{opacity:1!important;transform:none!importa
 .field label{position:absolute;left:18px;top:16px;color:var(--muted);font-size:15px;pointer-events:none;transition:.25s var(--ease)}
 .field input:focus+label,.field input:not(:placeholder-shown)+label,
 .field textarea:focus+label,.field textarea:not(:placeholder-shown)+label{top:7px;font-size:11px;color:var(--cyan);letter-spacing:.5px}
-.services{grid-column:1/-1;text-align:left}
-.services__label{display:block;font-size:14px;color:var(--muted);margin-bottom:12px}
+.form-svc{grid-column:1/-1;text-align:left;margin:-2px 0}
+.services__label{display:block;font-size:14px;color:var(--muted);margin-bottom:9px}
 .services__hint{font-size:12.5px;opacity:.75}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
 .chip{display:inline-flex;align-items:center;gap:7px;padding:11px 18px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--ink);font-family:var(--font);font-size:14px;font-weight:500;cursor:none;transition:background .25s,border-color .25s,transform .25s var(--ease),color .25s}
