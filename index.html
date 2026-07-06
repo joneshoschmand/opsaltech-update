@@ -446,25 +446,43 @@
     </h2>
     <p class="cta__sub">Erzähl uns von deinem Projekt. Wir melden uns innerhalb von 24 Stunden mit ersten Ideen.</p>
 
-    <form class="cta__form" id="contactForm" novalidate>
+    <form class="cta__form" id="contactForm" action="https://formspree.io/f/mnjkrqrz" method="POST" novalidate>
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0" />
+      <input type="hidden" name="leistungen" id="svcField" />
       <div class="field">
-        <input type="text" id="name" required placeholder=" " data-cursor="hover" />
+        <input type="text" id="name" name="name" required placeholder=" " autocomplete="name" data-cursor="hover" />
         <label for="name">Dein Name</label>
       </div>
       <div class="field">
-        <input type="email" id="email" required placeholder=" " data-cursor="hover" />
+        <input type="email" id="email" name="email" required placeholder=" " autocomplete="email" data-cursor="hover" />
         <label for="email">E-Mail</label>
       </div>
+      <div class="field--full services">
+        <span class="services__label">Woran bist du interessiert? <span class="services__hint">(Mehrfachauswahl möglich)</span></span>
+        <div class="chips" role="group" aria-label="Gewünschte Leistungen">
+          <button type="button" class="chip" data-service="Webdesign" aria-pressed="false">Webdesign</button>
+          <button type="button" class="chip" data-service="Content Creation" aria-pressed="false">Content Creation</button>
+          <button type="button" class="chip" data-service="Performance Marketing" aria-pressed="false">Performance Marketing</button>
+          <button type="button" class="chip" data-service="Social Media" aria-pressed="false">Social Media</button>
+          <button type="button" class="chip" data-service="Anderes" aria-pressed="false">Anderes</button>
+        </div>
+      </div>
       <div class="field field--full">
-        <textarea id="msg" rows="3" required placeholder=" " data-cursor="hover"></textarea>
+        <textarea id="msg" name="message" rows="3" required placeholder=" " data-cursor="hover"></textarea>
         <label for="msg">Worum geht's?</label>
       </div>
+      <label class="consent" for="consent">
+        <input type="checkbox" id="consent" required />
+        <span class="consent__box" aria-hidden="true"></span>
+        <span class="consent__txt">Ich habe die <a href="#" data-legal="datenschutz">Datenschutzerklärung</a> gelesen und stimme der Verarbeitung meiner Angaben zur Bearbeitung meiner Anfrage zu.</span>
+      </label>
       <button type="submit" class="btn btn--primary btn--xl magnetic" data-cursor="hover">
-        <span>Anfrage senden</span>
+        <span class="btn__label">Anfrage senden</span>
         <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <p class="cta__success" id="formSuccess">✦ Danke! Deine Anfrage ist raus — wir melden uns blitzschnell.</p>
-      <p class="cta__note">Mit dem Absenden öffnet sich dein E-Mail-Programm — es werden <strong>keine Daten auf diesem Server gespeichert</strong>. Mehr in der <a href="#" data-legal="datenschutz">Datenschutzerklärung</a>.</p>
+      <p class="cta__success" id="formSuccess" role="status">✦ Danke! Deine Anfrage ist raus — wir melden uns blitzschnell.</p>
+      <p class="cta__error" id="formError" role="alert">⚠ Da ging leider etwas schief. Bitte versuch es erneut oder schreib direkt an <a href="mailto:info@opsaltech.com">info@opsaltech.com</a>.</p>
+      <p class="cta__note">Mit dem Absenden werden deine Angaben über unseren Dienstleister <strong>Formspree</strong> verarbeitet, um deine Anfrage zu bearbeiten. Details in der <a href="#" data-legal="datenschutz">Datenschutzerklärung</a>.</p>
     </form>
 
     <div class="cta__direct">
@@ -647,6 +665,7 @@
   <p>Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt (Browsertyp, Betriebssystem, Referrer URL, Hostname, Uhrzeit, IP-Adresse). Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen.</p>
   <h5>Kontaktformular &amp; Anfrage per E-Mail oder Telefon</h5>
   <p>Wenn Sie uns per Kontaktformular, E-Mail oder Telefon kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten zwecks Bearbeitung der Anfrage bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter. Die Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt.</p>
+  <p>Für den technischen Versand unseres Kontaktformulars nutzen wir den Dienst <strong>Formspree</strong> (Formspree, Inc., 2093 Philadelphia Pike #1131, Claymont, DE 19703, USA). Wenn Sie das Formular absenden, werden die von Ihnen eingegebenen Daten (Name, E-Mail-Adresse, ausgewählte Leistungen und Nachricht) an Formspree übermittelt, dort verarbeitet und als E-Mail an uns weitergeleitet. Die Verarbeitung erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die Sie vor dem Absenden aktiv erteilen, sowie zur Durchführung vorvertraglicher Maßnahmen (Art. 6 Abs. 1 lit. b DSGVO). Die Übermittlung in die USA wird auf das EU-U.S. Data Privacy Framework bzw. Standardvertragsklauseln gestützt. Weitere Informationen: <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener">formspree.io/legal/privacy-policy</a>. Ihre Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen.</p>
 </div>
 
 <script src="script.js"></script>

@@ -194,26 +194,65 @@
     }
   }
 
-  /* ---------- CONTACT FORM ---------- */
+  /* ---------- CONTACT FORM (Formspree AJAX) ---------- */
   const form = document.getElementById('contactForm');
   const success = document.getElementById('formSuccess');
-  form?.addEventListener('submit', e => {
+  const errorMsg = document.getElementById('formError');
+  const chips = form ? [...form.querySelectorAll('.chip')] : [];
+  chips.forEach(c => c.addEventListener('click', () => {
+    c.setAttribute('aria-pressed', c.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+  }));
+  form?.addEventListener('submit', async e => {
     e.preventDefault();
+    const consent = form.querySelector('#consent');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const btnLabel = submitBtn?.querySelector('.btn__label');
     const name = form.querySelector('#name').value.trim();
     const email = form.querySelector('#email').value.trim();
     const msg = form.querySelector('#msg').value.trim();
+    const services = chips.filter(c => c.getAttribute('aria-pressed') === 'true').map(c => c.dataset.service);
+
+    let invalid = false;
     if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) || !msg) {
-      form.querySelectorAll('input,textarea').forEach(f => {
-        if (!f.value.trim()) { f.style.borderColor = '#ff4d9d'; setTimeout(() => f.style.borderColor = '', 1500); }
+      form.querySelectorAll('#name,#email,#msg').forEach(f => {
+        if (!f.value.trim()) { f.style.borderColor = '#ff8aa6'; setTimeout(() => f.style.borderColor = '', 1800); }
       });
-      return;
+      invalid = true;
     }
-    // No backend wired up — open a prefilled mail draft and confirm in-UI.
-    const body = encodeURIComponent(`Name: ${name}\nE-Mail: ${email}\n\n${msg}`);
-    window.location.href = `mailto:info@opsaltech.com?subject=${encodeURIComponent('Projektanfrage von ' + name)}&body=${body}`;
-    success.classList.add('show');
-    form.reset();
-    setTimeout(() => success.classList.remove('show'), 6000);
+    if (!consent.checked) {
+      const wrap = consent.closest('.consent');
+      wrap.classList.add('consent--error');
+      setTimeout(() => wrap.classList.remove('consent--error'), 2200);
+      invalid = true;
+    }
+    if (invalid) return;
+
+    // fill hidden fields for Formspree
+    form.querySelector('#svcField').value = services.join(', ');
+    const data = new FormData(form);
+    data.set('_subject', 'Projektanfrage von ' + name + (services.length ? ' — ' + services.join(', ') : ''));
+
+    errorMsg?.classList.remove('show');
+    success.classList.remove('show');
+    submitBtn.disabled = true;
+    const prev = btnLabel ? btnLabel.textContent : '';
+    if (btnLabel) btnLabel.textContent = 'Wird gesendet …';
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      if (res.ok) {
+        success.classList.add('show');
+        form.reset();
+        chips.forEach(c => c.setAttribute('aria-pressed', 'false'));
+        setTimeout(() => success.classList.remove('show'), 9000);
+      } else {
+        errorMsg?.classList.add('show');
+      }
+    } catch {
+      errorMsg?.classList.add('show');
+    } finally {
+      submitBtn.disabled = false;
+      if (btnLabel) btnLabel.textContent = prev || 'Anfrage senden';
+    }
   });
 
   /* ---------- SCROLL-HIGHLIGHT STATEMENT ---------- */
