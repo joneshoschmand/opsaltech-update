@@ -216,7 +216,7 @@
     const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
     if (!name || !emailOk || !phone) {
       form.querySelectorAll('#name,#email,#phone').forEach(f => {
-        if (!f.value.trim() || (f.id === 'email' && !emailOk)) { f.style.borderColor = '#ff8aa6'; setTimeout(() => f.style.borderColor = '', 1800); }
+        if (!f.value.trim() || (f.id === 'email' && !emailOk)) { f.style.borderColor = '#d92b57'; setTimeout(() => f.style.borderColor = '', 1800); }
       });
       invalid = true;
     }
