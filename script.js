@@ -8,15 +8,34 @@
 
   /* ---------- PRELOADER ---------- */
   const pre = document.getElementById('preloader');
-  const bar = pre.querySelector('.preloader__bar span');
   const count = pre.querySelector('.preloader__count');
+  const clipRect = pre.querySelector('#plClipRect');
+  const dot = pre.querySelector('.pl-dot');
+  // line vertices (viewBox units) — used to ride the dot along the climb
+  const plPts = [[6, 128], [58, 112], [110, 118], [162, 84], [214, 64], [266, 40], [314, 14]];
+  const yAt = (x) => {
+    for (let i = 1; i < plPts.length; i++) {
+      if (x <= plPts[i][0]) {
+        const [a, b] = plPts[i - 1], [c, d] = plPts[i];
+        return b + (d - b) * ((x - a) / (c - a));
+      }
+    }
+    return plPts[plPts.length - 1][1];
+  };
   let p = 0;
-  const tick = setInterval(() => {
-    p += Math.random() * 18;
-    if (p >= 100) { p = 100; clearInterval(tick); finish(); }
-    bar.style.width = p + '%';
+  const drawPre = () => {
+    const f = p / 100;
+    const x = 6 + (314 - 6) * f;
+    if (clipRect) clipRect.setAttribute('width', (x + 4).toFixed(1));
+    if (dot) { dot.setAttribute('cx', x.toFixed(1)); dot.setAttribute('cy', yAt(x).toFixed(1)); }
     count.textContent = Math.floor(p) + '%';
+  };
+  const tick = setInterval(() => {
+    p += Math.random() * 15 + 3;
+    if (p >= 100) { p = 100; clearInterval(tick); drawPre(); finish(); return; }
+    drawPre();
   }, 130);
+  drawPre();
   function finish() {
     setTimeout(() => {
       pre.classList.add('done');
@@ -51,16 +70,81 @@
     addEventListener('mouseup', () => ring.style.scale = '1');
   }
 
-  /* ---------- NAV SCROLL + PROGRESS ---------- */
+  /* ---------- NAV SCROLL + PROGRESS + SCROLL FX ---------- */
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const nav = document.getElementById('nav');
   const prog = document.querySelector('.scroll-progress');
+  const hero = document.querySelector('.hero');
+  const stSection = document.querySelector('.statement');
+  const stInner = document.querySelector('.statement__inner');
+  const spy = [...document.querySelectorAll('.nav__links a[href^="#"]')]
+    .map(a => ({ a, sec: document.querySelector(a.getAttribute('href')) }))
+    .filter(x => x.sec);
+  let spyActive = null, sTick = false;
+
   const onScroll = () => {
-    nav.classList.toggle('scrolled', scrollY > 40);
+    sTick = false;
+    const y = scrollY;
+    nav.classList.toggle('scrolled', y > 40);
     const h = document.documentElement.scrollHeight - innerHeight;
-    prog.style.width = (h > 0 ? (scrollY / h) * 100 : 0) + '%';
+    prog.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+
+    if (!reduce) {
+      // hero gently scales down + fades as it leaves (Apple-style)
+      if (hero) {
+        const p = clamp(y / (innerHeight * 0.85), 0, 1);
+        hero.style.opacity = (1 - p).toFixed(3);
+        hero.style.transform = `scale(${(1 - p * 0.06).toFixed(4)})`;
+      }
+      // pinned statement scales into focus while sticky
+      if (stSection && stInner) {
+        const total = stSection.offsetHeight - innerHeight;
+        const passed = total > 0 ? clamp(-stSection.getBoundingClientRect().top / total, 0, 1) : 0;
+        const k = clamp(passed / 0.5, 0, 1);   // resolve over first half of the pin
+        stInner.style.setProperty('--st-s', (0.86 + k * 0.14).toFixed(3));
+        stInner.style.setProperty('--st-o', (0.45 + k * 0.55).toFixed(3));
+      }
+    }
+
+    // scrollspy — highlight the current section in the nav
+    if (spy.length) {
+      const line = y + innerHeight * 0.32;
+      let cur = spy[0];
+      for (const s of spy) if (s.sec.offsetTop <= line) cur = s;
+      const active = y < innerHeight * 0.55 ? null : cur;
+      if (active !== spyActive) {
+        spy.forEach(s => s.a.classList.remove('active'));
+        active?.a.classList.add('active');
+        spyActive = active;
+      }
+    }
   };
-  addEventListener('scroll', onScroll, { passive: true });
+  const reqScroll = () => { if (!sTick) { sTick = true; requestAnimationFrame(onScroll); } };
+  addEventListener('scroll', reqScroll, { passive: true });
+  addEventListener('resize', reqScroll, { passive: true });
   onScroll();
+
+  /* ---------- SCROLL-VELOCITY MARQUEE (reactive tilt) ---------- */
+  if (!reduce) {
+    const marquees = [...document.querySelectorAll('.marquee')];
+    if (marquees.length) {
+      let lastY = scrollY, vel = 0, skew = 0, mraf = null;
+      const setSkew = v => marquees.forEach(m => m.style.setProperty('--mq-skew', v.toFixed(2) + 'deg'));
+      const decay = () => {
+        vel *= 0.86;
+        skew += (vel - skew) * 0.2;
+        setSkew(skew);
+        if (Math.abs(vel) > 0.02 || Math.abs(skew) > 0.02) mraf = requestAnimationFrame(decay);
+        else { mraf = null; setSkew(0); }
+      };
+      addEventListener('scroll', () => {
+        const y = scrollY;
+        vel = clamp((y - lastY) * 0.08, -2.4, 2.4);   // subtle tilt
+        lastY = y;
+        if (!mraf) mraf = requestAnimationFrame(decay);
+      }, { passive: true });
+    }
+  }
 
   /* ---------- MOBILE MENU ---------- */
   const burger = document.getElementById('burger');
@@ -80,6 +164,11 @@
   addEventListener('resize', () => { if (innerWidth > 900 && menu.classList.contains('open')) setMenu(false); });
 
   /* ---------- REVEAL ON SCROLL ---------- */
+  // cards & media scale gently into place (Apple product-card feel)
+  // (service cards are excluded — they get the scroll-assembly effect instead)
+  document.querySelectorAll('.card, .stat, .why__card, .member, .tcard, .logo-chip, .browser')
+    .forEach(el => { if (!el.closest('.services')) el.classList.add('reveal--zoom'); });
+
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -94,6 +183,230 @@
     [...group.querySelectorAll('.reveal')].forEach((el, i) => el.dataset.delay = i * 90);
   });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ---------- HEADLINE LINE REVEAL (masked rise, Apple-style) ---------- */
+  if (!reduce) {
+    document.querySelectorAll('.section-title, .cta__title').forEach(h => {
+      const lines = h.innerHTML.split(/<br\s*\/?>/i);
+      h.innerHTML = lines.map((ln, i) =>
+        `<span class="tl"><span class="tl__i" style="--tl-d:${(i * 0.09).toFixed(2)}s">${ln}</span></span>`
+      ).join('');
+      new IntersectionObserver((es, ob) => {
+        es.forEach(e => { if (e.isIntersecting) { h.classList.add('tl-in'); ob.unobserve(h); } });
+      }, { threshold: 0.2, rootMargin: '0px 0px -6% 0px' }).observe(h);
+    });
+  }
+
+  /* ---------- SERVICES: PINNED FLASHCARDS + RISING GRAPH ---------- */
+  const svcPin = document.querySelector('.services .cards-pin');
+  const svcStage = svcPin?.querySelector('.cards');
+  const svcDots = svcPin?.querySelector('.cards-dots');
+  if (svcPin && svcStage && !reduce) {
+    const cards = [...svcStage.querySelectorAll('.card')];
+    const N = cards.length;
+    if (N > 1) {
+      svcPin.style.setProperty('--n', N);
+      svcPin.classList.add('is-pinned');
+
+      // KPI count-up (replays each time a card becomes active)
+      const fmt = (v, dec, pre, suf) => pre + v.toFixed(dec) + suf;
+      const runKPIs = (card) => card.querySelectorAll('.kpi__val').forEach(el => {
+        if (el._raf) cancelAnimationFrame(el._raf);
+        const to = parseFloat(el.dataset.to) || 0, dec = parseInt(el.dataset.decimals || 0);
+        const pre = el.dataset.prefix || '', suf = el.dataset.suffix || '', dur = 1100;
+        let start = null;
+        const stepFn = (t) => {
+          if (!start) start = t;
+          const p = Math.min((t - start) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+          el.textContent = fmt(to * e, dec, pre, suf);
+          if (p < 1) el._raf = requestAnimationFrame(stepFn);
+        };
+        el._raf = requestAnimationFrame(stepFn);
+      });
+      const resetKPIs = (card) => card.querySelectorAll('.kpi__val').forEach(el => {
+        if (el._raf) cancelAnimationFrame(el._raf);
+        el.textContent = (el.dataset.prefix || '') + (0).toFixed(parseInt(el.dataset.decimals || 0)) + (el.dataset.suffix || '');
+      });
+
+      const topOf = () => svcPin.getBoundingClientRect().top + scrollY;
+      const dots = cards.map((_, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('aria-label', `Leistung ${i + 1} von ${N}`);
+        b.addEventListener('click', () => {
+          const total = svcPin.offsetHeight - innerHeight;
+          scrollTo({ top: topOf() + ((i + 0.5) / N) * total, behavior: 'smooth' });
+        });
+        svcDots?.appendChild(b);
+        return b;
+      });
+      let cur = -1, tick = false;
+      const paint = () => {
+        tick = false;
+        const total = svcPin.offsetHeight - innerHeight;
+        const p = total > 0 ? clamp(-svcPin.getBoundingClientRect().top / total, 0, 1) : 0;
+        let idx = Math.floor(p * N);
+        if (idx >= N) idx = N - 1;
+        if (idx === cur) return;
+        cur = idx;
+        cards.forEach((c, i) => {
+          const active = i === idx;
+          c.style.opacity = active ? '1' : '0';
+          c.style.transform = active ? 'none' : `translateY(${i < idx ? -40 : 40}px) scale(.955)`;
+          c.style.pointerEvents = active ? 'auto' : 'none';
+          c.style.zIndex = active ? '2' : '1';
+          c.classList.toggle('is-active', active);   // triggers the rising bars
+          if (active) runKPIs(c); else resetKPIs(c);
+        });
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      };
+      const req = () => { if (!tick) { tick = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', req, { passive: true });
+      addEventListener('resize', req, { passive: true });
+      paint();
+    }
+  }
+
+  /* ---------- PROCESS: SCROLL-LINKED LCD READOUTS ---------- */
+  (() => {
+    const steps = [...document.querySelectorAll('.process .step')];
+    if (!steps.length) return;
+    const lcds = steps.map(step => {
+      const box = document.createElement('div');
+      box.className = 'step__lcd';
+      box.setAttribute('aria-hidden', 'true');
+      box.innerHTML = '<span class="step__lcd-label">Fortschritt</span>' +
+        '<span class="lcd"><span class="lcd-val">000</span><span class="lcd-unit">%</span></span>';
+      step.appendChild(box);
+      return box.querySelector('.lcd-val');
+    });
+    if (reduce) { lcds.forEach((v, i) => { v.textContent = '100'; steps[i].classList.add('is-complete'); }); return; }
+    let tick = false;
+    const paint = () => {
+      tick = false;
+      steps.forEach((step, i) => {
+        const r = step.getBoundingClientRect();
+        const prog = clamp((innerHeight * 0.72 - r.top) / (r.height * 0.7 + innerHeight * 0.12), 0, 1);
+        lcds[i].textContent = String(Math.round(prog * 100)).padStart(3, '0');
+        step.classList.toggle('is-active', prog > 0.02 && prog < 0.999);
+        step.classList.toggle('is-complete', prog >= 0.999);
+      });
+    };
+    const req = () => { if (!tick) { tick = true; requestAnimationFrame(paint); } };
+    addEventListener('scroll', req, { passive: true });
+    addEventListener('resize', req, { passive: true });
+    paint();
+  })();
+
+  /* ---------- PINNED ONE-AT-A-TIME SHOWCASE ---------- */
+  const showcase = document.querySelector('.showcase');
+  const stage = showcase?.querySelector('.showcase__stage');
+  const dotsWrap = showcase?.querySelector('.showcase__dots');
+  if (showcase && stage && !reduce) {
+    const tiles = [...stage.querySelectorAll('.browser')];
+    const N = tiles.length;
+    if (N > 1) {
+      showcase.style.setProperty('--n', N);
+      showcase.classList.add('is-pinned');
+      tiles.forEach(t => t.classList.remove('reveal', 'reveal--zoom'));
+
+      const topOf = () => showcase.getBoundingClientRect().top + scrollY;
+      const dots = tiles.map((_, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('aria-label', `Beispiel ${i + 1} von ${N}`);
+        b.addEventListener('click', () => {
+          const total = showcase.offsetHeight - innerHeight;
+          scrollTo({ top: topOf() + ((i + 0.5) / N) * total, behavior: 'smooth' });
+        });
+        dotsWrap?.appendChild(b);
+        return b;
+      });
+
+      let cur = -1, tick = false;
+      const paint = () => {
+        tick = false;
+        const total = showcase.offsetHeight - innerHeight;
+        const p = total > 0 ? clamp(-showcase.getBoundingClientRect().top / total, 0, 1) : 0;
+        let idx = Math.floor(p * N);
+        if (idx >= N) idx = N - 1;
+        if (idx === cur) return;
+        cur = idx;
+        tiles.forEach((t, i) => {
+          const active = i === idx;
+          t.style.opacity = active ? '1' : '0';
+          t.style.transform = active ? 'none' : `translateY(${i < idx ? -46 : 46}px) scale(.955)`;
+          t.style.pointerEvents = active ? 'auto' : 'none';
+          t.style.zIndex = active ? '2' : '1';
+        });
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      };
+      const req = () => { if (!tick) { tick = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', req, { passive: true });
+      addEventListener('resize', req, { passive: true });
+      paint();
+    }
+  }
+
+  /* ---------- WHY: PINNED GIANT-ICON STATEMENTS ---------- */
+  const whyPin = document.querySelector('.why-pin');
+  const whyGrid = whyPin?.querySelector('.why__grid');
+  const whyDots = whyPin?.querySelector('.why-dots');
+  if (whyPin && whyGrid && !reduce) {
+    const items = [...whyGrid.querySelectorAll('.why__card')];
+    const N = items.length;
+    if (N > 1) {
+      whyPin.style.setProperty('--n', N);
+      whyPin.classList.add('is-pinned');
+      items.forEach((card, i) => {
+        card.classList.remove('reveal', 'reveal--zoom');
+        // animated index eyebrow
+        const idx = document.createElement('span');
+        idx.className = 'why__idx';
+        idx.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(N).padStart(2, '0');
+        const h = card.querySelector('h3');
+        card.insertBefore(idx, h);
+        // split heading into masked, staggered words
+        h.innerHTML = h.textContent.trim().split(/\s+/)
+          .map(w => `<span class="wl"><span class="wi">${w}</span></span>`).join(' ');
+      });
+      const topOf = () => whyPin.getBoundingClientRect().top + scrollY;
+      const dots = items.map((_, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('aria-label', `Punkt ${i + 1} von ${N}`);
+        b.addEventListener('click', () => {
+          const total = whyPin.offsetHeight - innerHeight;
+          scrollTo({ top: topOf() + ((i + 0.5) / N) * total, behavior: 'smooth' });
+        });
+        whyDots?.appendChild(b);
+        return b;
+      });
+      let cur = -1, tick = false;
+      const paint = () => {
+        tick = false;
+        const total = whyPin.offsetHeight - innerHeight;
+        const p = total > 0 ? clamp(-whyPin.getBoundingClientRect().top / total, 0, 1) : 0;
+        let idx = Math.floor(p * N);
+        if (idx >= N) idx = N - 1;
+        if (idx === cur) return;
+        cur = idx;
+        items.forEach((c, i) => {
+          const active = i === idx;
+          c.style.opacity = active ? '1' : '0';
+          c.style.transform = active ? 'none' : `translateY(${i < idx ? -30 : 30}px)`;
+          c.style.pointerEvents = active ? 'auto' : 'none';
+          c.style.zIndex = active ? '2' : '1';
+          c.classList.toggle('is-active', active);
+        });
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      };
+      const req = () => { if (!tick) { tick = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', req, { passive: true });
+      addEventListener('resize', req, { passive: true });
+      paint();
+    }
+  }
 
   /* ---------- COUNTERS ---------- */
   const counters = document.querySelectorAll('[data-count]');
@@ -262,11 +575,19 @@
     const words = st.textContent.trim().split(/\s+/);
     st.innerHTML = words.map(w => `<span class="w">${w}</span>`).join(' ');
     const spans = [...st.querySelectorAll('.w')];
+    const sec = st.closest('.statement');
     let raf = null;
     const paint = () => {
       raf = null;
-      const r = st.getBoundingClientRect();
-      const p = (innerHeight * 0.82 - r.top) / (r.height + innerHeight * 0.45);
+      let p;
+      if (sec) {
+        // tie word-by-word lighting to progress through the pinned section
+        const total = sec.offsetHeight - innerHeight;
+        p = total > 0 ? (-sec.getBoundingClientRect().top / total) * 1.6 - 0.1 : 0;
+      } else {
+        const r = st.getBoundingClientRect();
+        p = (innerHeight * 0.82 - r.top) / (r.height + innerHeight * 0.45);
+      }
       const active = Math.max(0, Math.min(1, p)) * (spans.length + 2);
       spans.forEach((s, i) => {
         const d = active - i;

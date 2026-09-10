@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="theme-color" content="#f4f6fc" />
+<meta name="theme-color" content="#fbfbfd" />
 
 <title>Webdesign &amp; Social-Media-Agentur Willich | OPSALTECH</title>
 <meta name="description" content="OPSALTECH — deine Agentur aus Willich für Webdesign, Social Media Marketing &amp; Content Creation. Moderne Websites, mehr Reichweite und messbares Wachstum." />
@@ -39,7 +39,7 @@
 <link rel="preload" href="fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="fonts.css" />
-<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="styles.css?v=16" />
 </head>
 <body>
 
@@ -65,7 +65,19 @@
 <div class="preloader" id="preloader" aria-hidden="true">
   <div class="preloader__inner">
     <div class="preloader__logo">OPSALTECH</div>
-    <div class="preloader__bar"><span></span></div>
+    <div class="preloader__graph">
+      <svg viewBox="0 0 320 150" aria-hidden="true">
+        <line class="pl-grid" x1="0" y1="38" x2="320" y2="38"/>
+        <line class="pl-grid" x1="0" y1="75" x2="320" y2="75"/>
+        <line class="pl-grid" x1="0" y1="112" x2="320" y2="112"/>
+        <g clip-path="url(#plClip)">
+          <path class="pl-area" d="M6,150 L6,128 L58,112 L110,118 L162,84 L214,64 L266,40 L314,14 L314,150 Z"/>
+          <path class="pl-line" d="M6,128 L58,112 L110,118 L162,84 L214,64 L266,40 L314,14"/>
+        </g>
+        <circle class="pl-dot" cx="6" cy="128" r="6"/>
+        <clipPath id="plClip"><rect id="plClipRect" x="0" y="0" width="0" height="150"/></clipPath>
+      </svg>
+    </div>
     <div class="preloader__count">0%</div>
   </div>
 </div>
@@ -112,6 +124,17 @@
 <!-- ============ HERO ============ -->
 <main>
 <section class="hero" id="hero">
+  <div class="hero__chart" aria-hidden="true">
+    <svg viewBox="0 0 1440 300" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="heroBarGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#4f8dff"/>
+          <stop offset="1" stop-color="#0071e3"/>
+        </linearGradient>
+      </defs>
+      <g class="hero__chart-scroll" fill="url(#heroBarGrad)"><rect x="17" y="254" width="46" height="46" rx="7"/><rect x="97" y="235" width="46" height="65" rx="7"/><rect x="177" y="241" width="46" height="59" rx="7"/><rect x="257" y="215" width="46" height="85" rx="7"/><rect x="337" y="215" width="46" height="85" rx="7"/><rect x="417" y="202" width="46" height="98" rx="7"/><rect x="497" y="200" width="46" height="100" rx="7"/><rect x="577" y="181" width="46" height="119" rx="7"/><rect x="657" y="187" width="46" height="113" rx="7"/><rect x="737" y="161" width="46" height="139" rx="7"/><rect x="817" y="161" width="46" height="139" rx="7"/><rect x="897" y="148" width="46" height="152" rx="7"/><rect x="977" y="146" width="46" height="154" rx="7"/><rect x="1057" y="127" width="46" height="173" rx="7"/><rect x="1137" y="133" width="46" height="167" rx="7"/><rect x="1217" y="107" width="46" height="193" rx="7"/><rect x="1297" y="107" width="46" height="193" rx="7"/><rect x="1377" y="94" width="46" height="206" rx="7"/><rect x="1457" y="92" width="46" height="208" rx="7"/><rect x="1537" y="73" width="46" height="227" rx="7"/><rect x="1617" y="79" width="46" height="221" rx="7"/><rect x="1697" y="53" width="46" height="247" rx="7"/><rect x="1777" y="53" width="46" height="247" rx="7"/><rect x="1857" y="40" width="46" height="260" rx="7"/><rect x="1937" y="38" width="46" height="262" rx="7"/><rect x="2017" y="19" width="46" height="281" rx="7"/><rect x="2097" y="25" width="46" height="275" rx="7"/></g>
+    </svg>
+  </div>
   <div class="hero__badge reveal" data-cursor="hover">
     <span class="pulse"></span> Verfügbar für 3 neue Projekte · Q3 2026
   </div>
@@ -162,7 +185,7 @@
     <div class="stat__label">Ø Conversion-Uplift</div>
   </div>
   <div class="stat reveal">
-    <div class="stat__num" data-count="98" data-suffix="%">0</div>
+    <div class="stat__num" data-count="53" data-suffix="%">0</div>
     <div class="stat__label">Wiederkehrende Kunden</div>
   </div>
   <div class="stat reveal">
@@ -178,8 +201,9 @@
     <h2 class="section-title">Alles, was deine Marke<br><span class="grad">digital dominieren</span> lässt.</h2>
   </div>
 
-  <div class="cards">
-    <article class="card reveal" data-cursor="hover" data-tilt>
+  <div class="cards-pin">
+    <div class="cards cards-stage">
+    <article class="card" data-cursor="hover" data-tilt>
       <div class="card__glow"></div>
       <div class="card__num">01</div>
       <div class="card__icon">
@@ -188,9 +212,28 @@
       <h3>Webdesign &amp; Development</h3>
       <p>Conversion-optimierte Websites, die laden bevor man blinzelt. Responsive, SEO-stark und gebaut für Wachstum — kein Template von der Stange.</p>
       <ul class="card__tags"><li>Next-Gen UI</li><li>SEO</li><li>Performance</li><li>CMS</li></ul>
+      <div class="card__analytics" aria-hidden="true">
+        <div class="viz__kpis">
+          <div class="kpi"><b class="kpi__val" data-to="218" data-prefix="+" data-suffix="%">+0%</b><span class="kpi__k">Conversion</span></div>
+          <div class="kpi"><b class="kpi__val" data-to="0.9" data-decimals="1" data-suffix="s">0.0s</b><span class="kpi__k">Ladezeit</span></div>
+          <div class="kpi"><b class="kpi__val" data-to="100">0</b><span class="kpi__k">Lighthouse</span></div>
+        </div>
+        <div class="viz__chart">
+          <div class="viz__yaxis"><span>100</span><span>50</span><span>0</span></div>
+          <div class="viz__plot">
+            <span class="viz__bar" style="--h:30%"></span>
+            <span class="viz__bar" style="--h:44%"></span>
+            <span class="viz__bar" style="--h:40%"></span>
+            <span class="viz__bar" style="--h:62%"></span>
+            <span class="viz__bar" style="--h:80%"></span>
+            <span class="viz__bar" style="--h:98%"></span>
+          </div>
+          <div class="viz__xaxis"><span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span></div>
+        </div>
+      </div>
     </article>
 
-    <article class="card reveal" data-cursor="hover" data-tilt>
+    <article class="card" data-cursor="hover" data-tilt>
       <div class="card__glow"></div>
       <div class="card__num">02</div>
       <div class="card__icon">
@@ -199,9 +242,28 @@
       <h3>Social Media Marketing</h3>
       <p>Strategische Kampagnen auf Instagram, LinkedIn &amp; TikTok. Community-Management, gezielte Ads und Content, der wirklich klickt — und konvertiert.</p>
       <ul class="card__tags"><li>Strategie</li><li>Paid Ads</li><li>Community</li><li>Analytics</li></ul>
+      <div class="card__analytics" aria-hidden="true">
+        <div class="viz__kpis">
+          <div class="kpi"><b class="kpi__val" data-to="4.7" data-decimals="1" data-suffix="×">0.0×</b><span class="kpi__k">Reichweite</span></div>
+          <div class="kpi"><b class="kpi__val" data-to="312" data-prefix="+" data-suffix="%">+0%</b><span class="kpi__k">Engagement</span></div>
+          <div class="kpi"><b class="kpi__val" data-to="1.2" data-decimals="1" data-suffix="M">0.0M</b><span class="kpi__k">Impressionen</span></div>
+        </div>
+        <div class="viz__chart">
+          <div class="viz__yaxis"><span>100</span><span>50</span><span>0</span></div>
+          <div class="viz__plot">
+            <span class="viz__bar" style="--h:22%"></span>
+            <span class="viz__bar" style="--h:38%"></span>
+            <span class="viz__bar" style="--h:54%"></span>
+            <span class="viz__bar" style="--h:50%"></span>
+            <span class="viz__bar" style="--h:76%"></span>
+            <span class="viz__bar" style="--h:94%"></span>
+          </div>
+          <div class="viz__xaxis"><span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span></div>
+        </div>
+      </div>
     </article>
 
-    <article class="card reveal" data-cursor="hover" data-tilt>
+    <article class="card" data-cursor="hover" data-tilt>
       <div class="card__glow"></div>
       <div class="card__num">03</div>
       <div class="card__icon">
@@ -210,7 +272,28 @@
       <h3>Content Creation</h3>
       <p>Fotografie, Videoproduktion, Copywriting und Grafikdesign in Kino-Qualität. Wir produzieren Inhalte, die Aufmerksamkeit verdienen — nicht erbetteln.</p>
       <ul class="card__tags"><li>Foto &amp; Video</li><li>Copy</li><li>Motion</li><li>Grafik</li></ul>
+      <div class="card__analytics" aria-hidden="true">
+        <div class="viz__kpis">
+          <div class="kpi"><b class="kpi__val" data-to="156" data-prefix="+" data-suffix="%">+0%</b><span class="kpi__k">Watchtime</span></div>
+          <div class="kpi"><b class="kpi__val" data-to="8.4" data-decimals="1" data-suffix="%">0.0%</b><span class="kpi__k">CTR</span></div>
+          <div class="kpi"><b class="kpi__val" data-to="4.1" data-decimals="1" data-suffix="M">0.0M</b><span class="kpi__k">Views</span></div>
+        </div>
+        <div class="viz__chart">
+          <div class="viz__yaxis"><span>100</span><span>50</span><span>0</span></div>
+          <div class="viz__plot">
+            <span class="viz__bar" style="--h:34%"></span>
+            <span class="viz__bar" style="--h:30%"></span>
+            <span class="viz__bar" style="--h:52%"></span>
+            <span class="viz__bar" style="--h:64%"></span>
+            <span class="viz__bar" style="--h:72%"></span>
+            <span class="viz__bar" style="--h:96%"></span>
+          </div>
+          <div class="viz__xaxis"><span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span></div>
+        </div>
+      </div>
     </article>
+    <div class="cards-dots" aria-hidden="true"></div>
+    </div>
   </div>
 </section>
 
@@ -221,7 +304,8 @@
     <h2 class="section-title">Andere liefern Websites.<br>Wir liefern <span class="grad">Wachstum.</span></h2>
   </div>
 
-  <div class="why__grid">
+  <div class="why-pin">
+    <div class="why__grid">
     <article class="why__card reveal" data-cursor="hover" data-tilt>
       <div class="why__ring"></div>
       <div class="why__icon">✦</div>
@@ -246,6 +330,8 @@
       <h3>Dein fester Ansprechpartner.</h3>
       <p>Kein Callcenter, keine Warteschleife. Du sprichst direkt mit den Machern — schnell, ehrlich, auf Augenhöhe.</p>
     </article>
+    <div class="why-dots" aria-hidden="true"></div>
+    </div>
   </div>
 </section>
 
@@ -258,21 +344,31 @@
   </div>
 
   <div class="showcase">
-    <article class="browser browser--live reveal">
+    <div class="showcase__stage">
+    <article class="browser browser--static reveal">
+      <div class="browser__bar">
+        <span class="browser__dots"><i></i><i></i><i></i></span>
+        <span class="browser__url"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>olaf-hohnen-handwerkliche-moebeltischlerei.de</span>
+        <a class="browser__open" href="https://olaf-hohnen-handwerkliche-moebeltischlerei.de" target="_blank" rel="noopener" data-cursor="hover" aria-label="Olaf Hohnen Möbeltischlerei live öffnen">Live ↗</a>
+      </div>
+      <a class="browser__view browser__view--static" href="https://olaf-hohnen-handwerkliche-moebeltischlerei.de" target="_blank" rel="noopener" data-cursor="hover">
+        <img src="images/sites/olaf-hohnen.jpg" alt="Olaf Hohnen — Handwerkliche Möbeltischlerei — Website von OPSALTECH" loading="lazy" />
+        <span class="browser__cta">Zur Live-Seite ↗</span>
+      </a>
+      <div class="browser__cap"><strong>Olaf Hohnen · Möbeltischlerei</strong><span>Webdesign &amp; Conversion</span></div>
+    </article>
+
+    <article class="browser browser--static reveal">
       <div class="browser__bar">
         <span class="browser__dots"><i></i><i></i><i></i></span>
         <span class="browser__url"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>herz-licht-alltagshilfe.de</span>
         <a class="browser__open" href="https://herz-licht-alltagshilfe.de" target="_blank" rel="noopener" data-cursor="hover" aria-label="Herz &amp; Licht live öffnen">Live ↗</a>
       </div>
-      <div class="browser__view browser__view--live" data-embed="https://herz-licht-alltagshilfe.de" data-embed-title="Herz &amp; Licht Alltagshilfe — Website von OPSALTECH">
-        <div class="browser__consent">
-          <svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-          <h4>Externe Live-Vorschau</h4>
-          <p>Hier wird die Website <strong>herz-licht-alltagshilfe.de</strong> live eingebettet. Beim Laden werden Daten (u.&nbsp;a. deine IP-Adresse) an den externen Anbieter übertragen. Es gilt dessen Datenschutzerklärung.</p>
-          <button class="btn btn--primary browser__load" type="button">Live-Vorschau laden</button>
-        </div>
-      </div>
-      <div class="browser__cap"><strong>Herz &amp; Licht Alltagshilfe</strong><span>Webdesign &amp; Conversion · live im Fenster</span></div>
+      <a class="browser__view browser__view--static" href="https://herz-licht-alltagshilfe.de" target="_blank" rel="noopener" data-cursor="hover">
+        <img src="images/sites/herz-licht.jpg" alt="Herz &amp; Licht Alltagshilfe — Website von OPSALTECH" loading="lazy" />
+        <span class="browser__cta">Zur Live-Seite ↗</span>
+      </a>
+      <div class="browser__cap"><strong>Herz &amp; Licht Alltagshilfe</strong><span>Webdesign &amp; Conversion</span></div>
     </article>
 
     <article class="browser browser--static reveal">
@@ -287,19 +383,8 @@
       </a>
       <div class="browser__cap"><strong>Stylecast</strong><span>Markenauftritt &amp; Webdesign</span></div>
     </article>
-
-    <article class="browser browser--static reveal">
-      <div class="browser__bar">
-        <span class="browser__dots"><i></i><i></i><i></i></span>
-        <span class="browser__url"><svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>mika-elektro.de</span>
-        <a class="browser__open" href="https://www.mika-elektro.de" target="_blank" rel="noopener" data-cursor="hover" aria-label="Mika Elektrotechnik live öffnen">Live ↗</a>
-      </div>
-      <a class="browser__view browser__view--static" href="https://www.mika-elektro.de" target="_blank" rel="noopener" data-cursor="hover">
-        <img src="images/sites/mika.jpg" alt="Mika Elektrotechnik — Website von OPSALTECH" loading="lazy" />
-        <span class="browser__cta">Zur Live-Seite ↗</span>
-      </a>
-      <div class="browser__cap"><strong>Mika Elektrotechnik</strong><span>Webdesign &amp; Lead-Generierung</span></div>
-    </article>
+    <div class="showcase__dots" aria-hidden="true"></div>
+    </div>
   </div>
 
   <p class="showcase__more reveal">Und über <strong>50 weitere Marken</strong> vertrauen auf uns:</p>
@@ -310,6 +395,11 @@
     <div class="logo-chip reveal" data-cursor="hover" data-tilt><img src="images/reference-immomakler.png" alt="Mein Immomakler" loading="lazy" /></div>
     <div class="logo-chip reveal" data-cursor="hover" data-tilt><img src="images/reference-baf.png" alt="BAF Unternehmensberatung" loading="lazy" /></div>
     <div class="logo-chip reveal" data-cursor="hover" data-tilt><img src="images/reference-az.png" alt="AZ Dellen &amp; Hagelschaden" loading="lazy" /></div>
+    <div class="logo-chip reveal" data-cursor="hover" data-tilt><img src="images/reference-olaf.png" alt="Olaf Hohnen — Handwerkliche Möbeltischlerei" loading="lazy" /></div>
+    <div class="logo-chip reveal" data-cursor="hover" data-tilt><img src="images/reference-mtec.png" alt="M-TEC Elektrotechnik GmbH" loading="lazy" /></div>
+    <div class="logo-chip reveal" data-cursor="hover" data-tilt><img src="images/reference-jts.png" alt="Jan ter Schmitten Immobilien" loading="lazy" /></div>
+    <div class="logo-chip reveal" data-cursor="hover" data-tilt><img src="images/reference-pmk.png" alt="PMK Service Parts Management" loading="lazy" /></div>
+    <div class="logo-chip reveal" data-cursor="hover" data-tilt><img src="images/reference-fuechsin.png" alt="die Fuechsin" loading="lazy" /></div>
   </div>
 </section>
 
@@ -462,7 +552,9 @@
 
 <!-- ============ SCROLL-HIGHLIGHT STATEMENT ============ -->
 <section class="statement">
-  <p class="statement__text" id="statementText">Deine Marke verdient mehr als eine hübsche Website. Sie verdient einen Auftritt, der Aufmerksamkeit in Kunden verwandelt — und Kunden in echte Fans.</p>
+  <div class="statement__inner">
+    <p class="statement__text" id="statementText">Deine Marke verdient mehr als eine hübsche Website. Sie verdient einen Auftritt, der Aufmerksamkeit in Kunden verwandelt — und Kunden in echte Fans.</p>
+  </div>
 </section>
 
 <!-- ============ CTA / CONTACT ============ -->
@@ -759,6 +851,7 @@
 }
 </script>
 
-<script src="script.js"></script>
+<script src="script.js?v=16"></script>
+<script type="module" src="js/process-kinetic.js?v=16"></script>
 </body>
 </html>
