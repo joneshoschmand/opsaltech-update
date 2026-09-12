@@ -204,7 +204,9 @@
     }, { threshold: 0.32, rootMargin: '0px 0px -12% 0px' });
     panels.forEach(p => io.observe(p));
 
-    // timeline: highlight the active step + travel the fill line down with the scroll
+    // timeline: highlight the active step + travel the fill line with the scroll
+    // (vertical rail on desktop, horizontal sticky bar on mobile)
+    const current = svc.querySelector('.svc__current');
     let tick = false;
     const paint = () => {
       tick = false;
@@ -212,13 +214,23 @@
       let idx = 0;
       panels.forEach((p, i) => { if (p.getBoundingClientRect().top <= mark) idx = i; });
       steps.forEach((s, i) => s.classList.toggle('is-active', i === idx));
+      if (current) current.textContent = steps[idx].querySelector('.svc__label').textContent;
       if (fill && lineEl && dots[idx]) {
         const cp = panels[idx].getBoundingClientRect();
         const internal = clamp((mark - cp.top) / cp.height, 0, 1);
-        const lineTop = lineEl.getBoundingClientRect().top;
-        const posOf = (i) => dots[i].getBoundingClientRect().top - lineTop + 7;
-        const a = posOf(idx), b = posOf(Math.min(idx + 1, N - 1));
-        fill.style.height = Math.max(0, a + (b - a) * internal).toFixed(1) + 'px';
+        const lr = lineEl.getBoundingClientRect();
+        const j = Math.min(idx + 1, N - 1);
+        if (innerWidth <= 860) {   // horizontal fill
+          const posOf = (i) => { const d = dots[i].getBoundingClientRect(); return d.left + d.width / 2 - lr.left; };
+          const a = posOf(idx), b = posOf(j);
+          fill.style.height = '';
+          fill.style.width = Math.max(0, a + (b - a) * internal).toFixed(1) + 'px';
+        } else {                    // vertical fill
+          const posOf = (i) => dots[i].getBoundingClientRect().top - lr.top + 7;
+          const a = posOf(idx), b = posOf(j);
+          fill.style.width = '';
+          fill.style.height = Math.max(0, a + (b - a) * internal).toFixed(1) + 'px';
+        }
       }
     };
     const req = () => { if (!tick) { tick = true; requestAnimationFrame(paint); } };

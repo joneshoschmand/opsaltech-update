@@ -327,9 +327,22 @@ html.a11y-nomotion .footer__big .fb-l{opacity:1!important;transform:none!importa
 .svc__step.is-active .svc__dot{border-color:var(--violet);background:var(--violet);box-shadow:0 0 0 5px rgba(47,107,255,.16)}
 .svc__panels{display:flex;flex-direction:column;gap:clamp(30px,6vh,60px);min-width:0}
 .svc__panel{scroll-margin-top:120px}
+.svc__current{display:none}
 @media (max-width:860px){
+  /* mobile: horizontal sticky timeline on top, panels scroll below */
   .svc{grid-template-columns:1fr;gap:0}
-  .svc__rail{display:none}
+  .svc__rail{position:sticky;top:56px;z-index:30;align-self:stretch;
+    margin:0 calc(-1 * clamp(20px,5vw,64px)) 26px;padding:14px clamp(20px,5vw,64px) 13px;
+    background:rgba(251,251,253,.82);backdrop-filter:blur(16px) saturate(140%);border-bottom:1px solid var(--line)}
+  .svc__current{display:block;text-align:center;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:-.01em;color:var(--ink);margin-bottom:12px;transition:color .3s}
+  .svc__steps{flex-direction:row;justify-content:space-between;gap:0;align-items:flex-start}
+  .svc__line{left:12.5%;right:12.5%;top:7px;bottom:auto;width:auto;height:2px}
+  .svc__fill{width:0;height:100%}
+  .svc__step{flex:1;padding-left:0;flex-direction:column;align-items:center;gap:6px}
+  .svc__dot{position:relative;left:auto;top:auto}
+  .svc__num{opacity:.55}
+  .svc__step.is-active .svc__num{opacity:1}
+  .svc__label{display:none}
 }
 /* analytics panel inside each card — KPIs + bar chart with axes */
 .card__analytics{margin-top:24px}
