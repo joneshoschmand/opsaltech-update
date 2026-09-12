@@ -8,44 +8,18 @@
 
   /* ---------- PRELOADER ---------- */
   const pre = document.getElementById('preloader');
-  const count = pre.querySelector('.preloader__count');
-  const clipRect = pre.querySelector('#plClipRect');
-  const dot = pre.querySelector('.pl-dot');
-  // line vertices (viewBox units) — used to ride the dot along the climb
-  const plPts = [[6, 128], [58, 112], [110, 118], [162, 84], [214, 64], [266, 40], [314, 14]];
-  const yAt = (x) => {
-    for (let i = 1; i < plPts.length; i++) {
-      if (x <= plPts[i][0]) {
-        const [a, b] = plPts[i - 1], [c, d] = plPts[i];
-        return b + (d - b) * ((x - a) / (c - a));
-      }
-    }
-    return plPts[plPts.length - 1][1];
+  // the wordmark assembles via CSS; dismiss once it has played AND the page loaded
+  let done = false;
+  const finish = () => {
+    if (done) return; done = true;
+    pre.classList.add('done');
+    document.querySelector('.hero').classList.add('in');
   };
-  let p = 0;
-  const drawPre = () => {
-    const f = p / 100;
-    const x = 6 + (314 - 6) * f;
-    if (clipRect) clipRect.setAttribute('width', (x + 4).toFixed(1));
-    if (dot) { dot.setAttribute('cx', x.toFixed(1)); dot.setAttribute('cy', yAt(x).toFixed(1)); }
-    count.textContent = Math.floor(p) + '%';
-  };
-  const tick = setInterval(() => {
-    p += Math.random() * 15 + 3;
-    if (p >= 100) { p = 100; clearInterval(tick); drawPre(); finish(); return; }
-    drawPre();
-  }, 130);
-  drawPre();
-  function finish() {
-    setTimeout(() => {
-      pre.classList.add('done');
-      document.querySelector('.hero').classList.add('in');
-    }, 350);
-  }
-  // safety net
-  window.addEventListener('load', () => setTimeout(() => {
-    if (!pre.classList.contains('done')) { p = 100; clearInterval(tick); finish(); }
-  }, 2500));
+  let loaded = document.readyState === 'complete', minElapsed = false;
+  const maybe = () => { if (loaded && minElapsed) finish(); };
+  addEventListener('load', () => { loaded = true; maybe(); });
+  setTimeout(() => { minElapsed = true; maybe(); }, 1850);   // let the letters land
+  setTimeout(finish, 3600);                                  // hard safety net
 
   /* ---------- CUSTOM CURSOR ---------- */
   if (fine) {
@@ -197,74 +171,60 @@
     });
   }
 
-  /* ---------- SERVICES: PINNED FLASHCARDS + RISING GRAPH ---------- */
-  const svcPin = document.querySelector('.services .cards-pin');
-  const svcStage = svcPin?.querySelector('.cards');
-  const svcDots = svcPin?.querySelector('.cards-dots');
-  if (svcPin && svcStage && !reduce) {
-    const cards = [...svcStage.querySelectorAll('.card')];
-    const N = cards.length;
-    if (N > 1) {
-      svcPin.style.setProperty('--n', N);
-      svcPin.classList.add('is-pinned');
+  /* ---------- SERVICES: STICKY TIMELINE + SCROLLYTELLING ---------- */
+  const svc = document.querySelector('.svc');
+  if (svc) {
+    const lineEl = svc.querySelector('.svc__line');
+    const fill = svc.querySelector('.svc__fill');
+    const steps = [...svc.querySelectorAll('.svc__step')];
+    const dots = steps.map(s => s.querySelector('.svc__dot'));
+    const panels = [...svc.querySelectorAll('.svc__panel')];
+    const N = panels.length;
 
-      // KPI count-up (replays each time a card becomes active)
-      const fmt = (v, dec, pre, suf) => pre + v.toFixed(dec) + suf;
-      const runKPIs = (card) => card.querySelectorAll('.kpi__val').forEach(el => {
-        if (el._raf) cancelAnimationFrame(el._raf);
-        const to = parseFloat(el.dataset.to) || 0, dec = parseInt(el.dataset.decimals || 0);
-        const pre = el.dataset.prefix || '', suf = el.dataset.suffix || '', dur = 1100;
-        let start = null;
-        const stepFn = (t) => {
-          if (!start) start = t;
-          const p = Math.min((t - start) / dur, 1), e = 1 - Math.pow(1 - p, 3);
-          el.textContent = fmt(to * e, dec, pre, suf);
-          if (p < 1) el._raf = requestAnimationFrame(stepFn);
-        };
-        el._raf = requestAnimationFrame(stepFn);
-      });
-      const resetKPIs = (card) => card.querySelectorAll('.kpi__val').forEach(el => {
-        if (el._raf) cancelAnimationFrame(el._raf);
-        el.textContent = (el.dataset.prefix || '') + (0).toFixed(parseInt(el.dataset.decimals || 0)) + (el.dataset.suffix || '');
-      });
-
-      const topOf = () => svcPin.getBoundingClientRect().top + scrollY;
-      const dots = cards.map((_, i) => {
-        const b = document.createElement('button');
-        b.type = 'button';
-        b.setAttribute('aria-label', `Leistung ${i + 1} von ${N}`);
-        b.addEventListener('click', () => {
-          const total = svcPin.offsetHeight - innerHeight;
-          scrollTo({ top: topOf() + ((i + 0.5) / N) * total, behavior: 'smooth' });
-        });
-        svcDots?.appendChild(b);
-        return b;
-      });
-      let cur = -1, tick = false;
-      const paint = () => {
-        tick = false;
-        const total = svcPin.offsetHeight - innerHeight;
-        const p = total > 0 ? clamp(-svcPin.getBoundingClientRect().top / total, 0, 1) : 0;
-        let idx = Math.floor(p * N);
-        if (idx >= N) idx = N - 1;
-        if (idx === cur) return;
-        cur = idx;
-        cards.forEach((c, i) => {
-          const active = i === idx;
-          c.style.opacity = active ? '1' : '0';
-          c.style.transform = active ? 'none' : `translateY(${i < idx ? -40 : 40}px) scale(.955)`;
-          c.style.pointerEvents = active ? 'auto' : 'none';
-          c.style.zIndex = active ? '2' : '1';
-          c.classList.toggle('is-active', active);   // triggers the rising bars
-          if (active) runKPIs(c); else resetKPIs(c);
-        });
-        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    // KPI count-up — fires once when a panel scrolls into view
+    const fmt = (v, dec, pre, suf) => pre + v.toFixed(dec) + suf;
+    const runKPIs = (panel) => panel.querySelectorAll('.kpi__val').forEach(el => {
+      if (el._done) return; el._done = true;
+      const to = parseFloat(el.dataset.to) || 0, dec = parseInt(el.dataset.decimals || 0);
+      const pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+      if (reduce) { el.textContent = fmt(to, dec, pre, suf); return; }
+      let start = null; const dur = 1100;
+      const stepFn = (t) => {
+        if (!start) start = t;
+        const p = Math.min((t - start) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmt(to * e, dec, pre, suf);
+        if (p < 1) requestAnimationFrame(stepFn);
       };
-      const req = () => { if (!tick) { tick = true; requestAnimationFrame(paint); } };
-      addEventListener('scroll', req, { passive: true });
-      addEventListener('resize', req, { passive: true });
-      paint();
-    }
+      requestAnimationFrame(stepFn);
+    });
+
+    // reveal each panel's bars + KPIs as it enters view
+    const io = new IntersectionObserver((es) => {
+      es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-active'); runKPIs(e.target); } });
+    }, { threshold: 0.32, rootMargin: '0px 0px -12% 0px' });
+    panels.forEach(p => io.observe(p));
+
+    // timeline: highlight the active step + travel the fill line down with the scroll
+    let tick = false;
+    const paint = () => {
+      tick = false;
+      const mark = innerHeight * 0.42;   // the "reading line"
+      let idx = 0;
+      panels.forEach((p, i) => { if (p.getBoundingClientRect().top <= mark) idx = i; });
+      steps.forEach((s, i) => s.classList.toggle('is-active', i === idx));
+      if (fill && lineEl && dots[idx]) {
+        const cp = panels[idx].getBoundingClientRect();
+        const internal = clamp((mark - cp.top) / cp.height, 0, 1);
+        const lineTop = lineEl.getBoundingClientRect().top;
+        const posOf = (i) => dots[i].getBoundingClientRect().top - lineTop + 7;
+        const a = posOf(idx), b = posOf(Math.min(idx + 1, N - 1));
+        fill.style.height = Math.max(0, a + (b - a) * internal).toFixed(1) + 'px';
+      }
+    };
+    const req = () => { if (!tick) { tick = true; requestAnimationFrame(paint); } };
+    addEventListener('scroll', req, { passive: true });
+    addEventListener('resize', req, { passive: true });
+    paint();
   }
 
   /* ---------- PROCESS: SCROLL-LINKED LCD READOUTS ---------- */

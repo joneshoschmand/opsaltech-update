@@ -39,7 +39,7 @@
 <link rel="preload" href="fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="fonts.css" />
-<link rel="stylesheet" href="styles.css?v=17" />
+<link rel="stylesheet" href="styles.css?v=19" />
 </head>
 <body>
 
@@ -64,21 +64,8 @@
 <!-- ============ PRELOADER ============ -->
 <div class="preloader" id="preloader" aria-hidden="true">
   <div class="preloader__inner">
-    <div class="preloader__logo">OPSALTECH</div>
-    <div class="preloader__graph">
-      <svg viewBox="0 0 320 150" aria-hidden="true">
-        <line class="pl-grid" x1="0" y1="38" x2="320" y2="38"/>
-        <line class="pl-grid" x1="0" y1="75" x2="320" y2="75"/>
-        <line class="pl-grid" x1="0" y1="112" x2="320" y2="112"/>
-        <g clip-path="url(#plClip)">
-          <path class="pl-area" d="M6,150 L6,128 L58,112 L110,118 L162,84 L214,64 L266,40 L314,14 L314,150 Z"/>
-          <path class="pl-line" d="M6,128 L58,112 L110,118 L162,84 L214,64 L266,40 L314,14"/>
-        </g>
-        <circle class="pl-dot" cx="6" cy="128" r="6"/>
-        <clipPath id="plClip"><rect id="plClipRect" x="0" y="0" width="0" height="150"/></clipPath>
-      </svg>
-    </div>
-    <div class="preloader__count">0%</div>
+    <div class="preloader__word" aria-label="OPSALTECH"><span class="pl-l">O</span><span class="pl-l">P</span><span class="pl-l">S</span><span class="pl-l">A</span><span class="pl-l">L</span><span class="pl-l">T</span><span class="pl-l">E</span><span class="pl-l">C</span><span class="pl-l">H</span></div>
+    <div class="preloader__tag">DIGITAL WACHSTUM · AUS WILLICH</div>
   </div>
 </div>
 
@@ -201,98 +188,113 @@
     <h2 class="section-title">Alles, was deine Marke<br><span class="grad">digital dominieren</span> lässt.</h2>
   </div>
 
-  <div class="cards-pin">
-    <div class="cards cards-stage">
-    <article class="card" data-cursor="hover" data-tilt>
-      <div class="card__glow"></div>
-      <div class="card__num">01</div>
-      <div class="card__icon">
-        <svg viewBox="0 0 24 24" width="34" height="34"><rect x="3" y="4" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 8h18M7 12h6M7 15h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-      </div>
-      <h3>Webdesign &amp; Development</h3>
-      <p>Conversion-optimierte Websites, die laden bevor man blinzelt. Responsive, SEO-stark und gebaut für Wachstum — kein Template von der Stange.</p>
-      <ul class="card__tags"><li>Next-Gen UI</li><li>SEO</li><li>Performance</li><li>CMS</li></ul>
-      <div class="card__analytics" aria-hidden="true">
-        <div class="viz__kpis">
-          <div class="kpi"><b class="kpi__val" data-to="64" data-prefix="+" data-suffix="%">+0%</b><span class="kpi__k">Conversion</span></div>
-          <div class="kpi"><b class="kpi__val" data-to="1.2" data-decimals="1" data-suffix="s">0.0s</b><span class="kpi__k">Ladezeit</span></div>
-          <div class="kpi"><b class="kpi__val" data-to="96">0</b><span class="kpi__k">Lighthouse</span></div>
-        </div>
-        <div class="viz__chart">
-          <div class="viz__yaxis"><span>100</span><span>50</span><span>0</span></div>
-          <div class="viz__plot">
-            <span class="viz__bar" style="--h:30%"></span>
-            <span class="viz__bar" style="--h:44%"></span>
-            <span class="viz__bar" style="--h:40%"></span>
-            <span class="viz__bar" style="--h:62%"></span>
-            <span class="viz__bar" style="--h:80%"></span>
-            <span class="viz__bar" style="--h:98%"></span>
-          </div>
-          <div class="viz__xaxis"><span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span></div>
-        </div>
-      </div>
-    </article>
+  <div class="svc">
+    <aside class="svc__rail" aria-hidden="true">
+      <ol class="svc__steps">
+        <div class="svc__line"><span class="svc__fill"></span></div>
+        <li class="svc__step"><span class="svc__dot"></span><span class="svc__num">01</span><span class="svc__label">Webdesign &amp; Development</span></li>
+        <li class="svc__step"><span class="svc__dot"></span><span class="svc__num">02</span><span class="svc__label">Social Media Marketing</span></li>
+        <li class="svc__step"><span class="svc__dot"></span><span class="svc__num">03</span><span class="svc__label">Performance Marketing</span></li>
+        <li class="svc__step"><span class="svc__dot"></span><span class="svc__num">04</span><span class="svc__label">Content Creation</span></li>
+      </ol>
+    </aside>
 
-    <article class="card" data-cursor="hover" data-tilt>
-      <div class="card__glow"></div>
-      <div class="card__num">02</div>
-      <div class="card__icon">
-        <svg viewBox="0 0 24 24" width="34" height="34"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-      </div>
-      <h3>Social Media Marketing</h3>
-      <p>Strategische Kampagnen auf Instagram, LinkedIn &amp; TikTok. Community-Management, gezielte Ads und Content, der wirklich klickt — und konvertiert.</p>
-      <ul class="card__tags"><li>Strategie</li><li>Paid Ads</li><li>Community</li><li>Analytics</li></ul>
-      <div class="card__analytics" aria-hidden="true">
-        <div class="viz__kpis">
-          <div class="kpi"><b class="kpi__val" data-to="2.3" data-decimals="1" data-suffix="×">0.0×</b><span class="kpi__k">Reichweite</span></div>
-          <div class="kpi"><b class="kpi__val" data-to="85" data-prefix="+" data-suffix="%">+0%</b><span class="kpi__k">Engagement</span></div>
-          <div class="kpi"><b class="kpi__val" data-to="480" data-suffix="K">0K</b><span class="kpi__k">Impressionen</span></div>
+    <div class="svc__panels">
+      <article class="card svc__panel" data-cursor="hover">
+        <div class="card__num">01</div>
+        <div class="card__icon">
+          <svg viewBox="0 0 24 24" width="34" height="34"><rect x="3" y="4" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 8h18M7 12h6M7 15h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </div>
-        <div class="viz__chart">
-          <div class="viz__yaxis"><span>100</span><span>50</span><span>0</span></div>
-          <div class="viz__plot">
-            <span class="viz__bar" style="--h:22%"></span>
-            <span class="viz__bar" style="--h:38%"></span>
-            <span class="viz__bar" style="--h:54%"></span>
-            <span class="viz__bar" style="--h:50%"></span>
-            <span class="viz__bar" style="--h:76%"></span>
-            <span class="viz__bar" style="--h:94%"></span>
+        <h3>Webdesign &amp; Development</h3>
+        <p>Conversion-optimierte Websites, die laden bevor man blinzelt. Responsive, SEO-stark und gebaut für Wachstum — kein Template von der Stange.</p>
+        <ul class="card__tags"><li>Next-Gen UI</li><li>SEO</li><li>Performance</li><li>CMS</li></ul>
+        <div class="card__analytics" aria-hidden="true">
+          <div class="viz__kpis">
+            <div class="kpi"><b class="kpi__val" data-to="64" data-prefix="+" data-suffix="%">+0%</b><span class="kpi__k">Conversion</span></div>
+            <div class="kpi"><b class="kpi__val" data-to="1.2" data-decimals="1" data-suffix="s">0.0s</b><span class="kpi__k">Ladezeit</span></div>
+            <div class="kpi"><b class="kpi__val" data-to="96">0</b><span class="kpi__k">Lighthouse</span></div>
           </div>
-          <div class="viz__xaxis"><span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span></div>
+          <div class="viz__chart">
+            <div class="viz__yaxis"><span>100</span><span>50</span><span>0</span></div>
+            <div class="viz__plot">
+              <span class="viz__bar" style="--h:30%"></span><span class="viz__bar" style="--h:44%"></span><span class="viz__bar" style="--h:40%"></span><span class="viz__bar" style="--h:62%"></span><span class="viz__bar" style="--h:80%"></span><span class="viz__bar" style="--h:98%"></span>
+            </div>
+            <div class="viz__xaxis"><span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span></div>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
 
-    <article class="card" data-cursor="hover" data-tilt>
-      <div class="card__glow"></div>
-      <div class="card__num">03</div>
-      <div class="card__icon">
-        <svg viewBox="0 0 24 24" width="34" height="34"><path d="M4 6l16-2v14l-16 2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="9" cy="11" r="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-      </div>
-      <h3>Content Creation</h3>
-      <p>Fotografie, Videoproduktion, Copywriting und Grafikdesign in Kino-Qualität. Wir produzieren Inhalte, die Aufmerksamkeit verdienen — nicht erbetteln.</p>
-      <ul class="card__tags"><li>Foto &amp; Video</li><li>Copy</li><li>Motion</li><li>Grafik</li></ul>
-      <div class="card__analytics" aria-hidden="true">
-        <div class="viz__kpis">
-          <div class="kpi"><b class="kpi__val" data-to="72" data-prefix="+" data-suffix="%">+0%</b><span class="kpi__k">Watchtime</span></div>
-          <div class="kpi"><b class="kpi__val" data-to="4.6" data-decimals="1" data-suffix="%">0.0%</b><span class="kpi__k">CTR</span></div>
-          <div class="kpi"><b class="kpi__val" data-to="1.3" data-decimals="1" data-suffix="M">0.0M</b><span class="kpi__k">Views</span></div>
+      <article class="card svc__panel" data-cursor="hover">
+        <div class="card__num">02</div>
+        <div class="card__icon">
+          <svg viewBox="0 0 24 24" width="34" height="34"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
         </div>
-        <div class="viz__chart">
-          <div class="viz__yaxis"><span>100</span><span>50</span><span>0</span></div>
-          <div class="viz__plot">
-            <span class="viz__bar" style="--h:34%"></span>
-            <span class="viz__bar" style="--h:30%"></span>
-            <span class="viz__bar" style="--h:52%"></span>
-            <span class="viz__bar" style="--h:64%"></span>
-            <span class="viz__bar" style="--h:72%"></span>
-            <span class="viz__bar" style="--h:96%"></span>
+        <h3>Social Media Marketing</h3>
+        <p>Strategische Kampagnen auf Instagram, TikTok &amp; LinkedIn. Community-Management und Content, der wirklich klickt — organisch stark und markenbildend.</p>
+        <ul class="card__tags"><li>Strategie</li><li>Community</li><li>Reels</li><li>Trends</li></ul>
+        <div class="card__analytics" aria-hidden="true">
+          <div class="viz__kpis">
+            <div class="kpi"><b class="kpi__val" data-to="2.3" data-decimals="1" data-suffix="×">0.0×</b><span class="kpi__k">Reichweite</span></div>
+            <div class="kpi"><b class="kpi__val" data-to="85" data-prefix="+" data-suffix="%">+0%</b><span class="kpi__k">Engagement</span></div>
+            <div class="kpi"><b class="kpi__val" data-to="480" data-suffix="K">0K</b><span class="kpi__k">Impressionen</span></div>
           </div>
-          <div class="viz__xaxis"><span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span></div>
+          <div class="viz__chart">
+            <div class="viz__yaxis"><span>100</span><span>50</span><span>0</span></div>
+            <div class="viz__plot">
+              <span class="viz__bar" style="--h:22%"></span><span class="viz__bar" style="--h:38%"></span><span class="viz__bar" style="--h:54%"></span><span class="viz__bar" style="--h:50%"></span><span class="viz__bar" style="--h:76%"></span><span class="viz__bar" style="--h:94%"></span>
+            </div>
+            <div class="viz__xaxis"><span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span></div>
+          </div>
         </div>
-      </div>
-    </article>
-    <div class="cards-dots" aria-hidden="true"></div>
+      </article>
+
+      <article class="card svc__panel" data-cursor="hover">
+        <div class="card__num">03</div>
+        <div class="card__icon">
+          <svg viewBox="0 0 24 24" width="34" height="34"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Performance Marketing</h3>
+        <p>Datengetriebene Paid-Kampagnen auf Google &amp; Meta. Wir skalieren, was funktioniert, und stoppen, was Geld verbrennt — für maximalen Return on Ad Spend.</p>
+        <ul class="card__tags"><li>Google Ads</li><li>Meta Ads</li><li>Funnel</li><li>ROAS</li></ul>
+        <div class="card__analytics" aria-hidden="true">
+          <div class="viz__kpis">
+            <div class="kpi"><b class="kpi__val" data-to="4.8" data-decimals="1" data-suffix="×">0.0×</b><span class="kpi__k">ROAS</span></div>
+            <div class="kpi"><b class="kpi__val" data-to="38" data-prefix="−" data-suffix="%">−0%</b><span class="kpi__k">Cost/Lead</span></div>
+            <div class="kpi"><b class="kpi__val" data-to="92" data-prefix="+" data-suffix="%">+0%</b><span class="kpi__k">Leads</span></div>
+          </div>
+          <div class="viz__chart">
+            <div class="viz__yaxis"><span>100</span><span>50</span><span>0</span></div>
+            <div class="viz__plot">
+              <span class="viz__bar" style="--h:26%"></span><span class="viz__bar" style="--h:42%"></span><span class="viz__bar" style="--h:38%"></span><span class="viz__bar" style="--h:60%"></span><span class="viz__bar" style="--h:78%"></span><span class="viz__bar" style="--h:95%"></span>
+            </div>
+            <div class="viz__xaxis"><span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card svc__panel" data-cursor="hover">
+        <div class="card__num">04</div>
+        <div class="card__icon">
+          <svg viewBox="0 0 24 24" width="34" height="34"><path d="M4 6l16-2v14l-16 2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="9" cy="11" r="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <h3>Content Creation</h3>
+        <p>Fotografie, Videoproduktion, Copywriting und Grafikdesign in Kino-Qualität. Wir produzieren Inhalte, die Aufmerksamkeit verdienen — nicht erbetteln.</p>
+        <ul class="card__tags"><li>Foto &amp; Video</li><li>Copy</li><li>Motion</li><li>Grafik</li></ul>
+        <div class="card__analytics" aria-hidden="true">
+          <div class="viz__kpis">
+            <div class="kpi"><b class="kpi__val" data-to="72" data-prefix="+" data-suffix="%">+0%</b><span class="kpi__k">Watchtime</span></div>
+            <div class="kpi"><b class="kpi__val" data-to="4.6" data-decimals="1" data-suffix="%">0.0%</b><span class="kpi__k">CTR</span></div>
+            <div class="kpi"><b class="kpi__val" data-to="1.3" data-decimals="1" data-suffix="M">0.0M</b><span class="kpi__k">Views</span></div>
+          </div>
+          <div class="viz__chart">
+            <div class="viz__yaxis"><span>100</span><span>50</span><span>0</span></div>
+            <div class="viz__plot">
+              <span class="viz__bar" style="--h:34%"></span><span class="viz__bar" style="--h:30%"></span><span class="viz__bar" style="--h:52%"></span><span class="viz__bar" style="--h:64%"></span><span class="viz__bar" style="--h:72%"></span><span class="viz__bar" style="--h:96%"></span>
+            </div>
+            <div class="viz__xaxis"><span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span></div>
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
@@ -851,7 +853,7 @@
 }
 </script>
 
-<script src="script.js?v=17"></script>
-<script type="module" src="js/process-kinetic.js?v=17"></script>
+<script src="script.js?v=19"></script>
+<script type="module" src="js/process-kinetic.js?v=19"></script>
 </body>
 </html>
