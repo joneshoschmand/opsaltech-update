@@ -15,8 +15,8 @@
 <link rel="canonical" href="https://www.opsaltech.de/" />
 
 <!-- Favicon -->
-<link rel="icon" type="image/svg+xml" href="favicon.svg" />
-<link rel="apple-touch-icon" href="favicon.svg" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/favicon.svg" />
 
 <!-- Open Graph (Facebook, LinkedIn, WhatsApp …) -->
 <meta property="og:type" content="website" />
@@ -35,31 +35,10 @@
 <meta name="twitter:title" content="Webdesign &amp; Social-Media-Agentur Willich | OPSALTECH" />
 <meta name="twitter:description" content="Webdesign, Social Media Marketing &amp; Content Creation aus Willich — für messbares Wachstum." />
 <meta name="twitter:image" content="https://www.opsaltech.de/images/logo.png" />
-<!-- Lokal gehostete Schriften (DSGVO: keine Google-Fonts-CDN, keine IP-Übertragung an Google) -->
-<link rel="preload" href="fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="fonts.css" />
-<link rel="stylesheet" href="styles.css?v=20" />
+<!-- Schriftart Helvetica (System-Stack) — keine Web-Fonts, keine Fremd-Server -->
+<link rel="stylesheet" href="/styles.css?v=21" />
 </head>
-<body>
-
-<a class="skip-link" href="#hero">Zum Inhalt springen</a>
-
-<!-- ============ NOISE + AURORA BACKDROP ============ -->
-<div class="backdrop" aria-hidden="true">
-  <div class="aurora aurora--1"></div>
-  <div class="aurora aurora--2"></div>
-  <div class="aurora aurora--3"></div>
-  <div class="grid-overlay"></div>
-  <div class="noise"></div>
-</div>
-
-<!-- ============ CUSTOM CURSOR ============ -->
-<div class="cursor" aria-hidden="true"></div>
-<div class="cursor-dot" aria-hidden="true"></div>
-
-<!-- ============ PROGRESS BAR ============ -->
-<div class="scroll-progress" aria-hidden="true"></div>
+<body data-page="home">
 
 <!-- ============ PRELOADER ============ -->
 <div class="preloader" id="preloader" aria-hidden="true">
@@ -69,47 +48,8 @@
   </div>
 </div>
 
-<!-- ============ NAV ============ -->
-<header class="nav" id="nav">
-  <a href="#hero" class="nav__brand" data-cursor="hover">
-    <span class="nav__mark"></span>OPSALTECH
-  </a>
-  <nav class="nav__links" aria-label="Hauptnavigation">
-    <a href="#leistungen" data-cursor="hover">Leistungen</a>
-    <a href="#warum" data-cursor="hover">Warum wir</a>
-    <a href="#arbeiten" data-cursor="hover">Referenzen</a>
-    <a href="#team" data-cursor="hover">Team</a>
-    <a href="#prozess" data-cursor="hover">Prozess</a>
-  </nav>
-  <a href="#kontakt" class="btn btn--nav magnetic" data-cursor="hover">
-    <span>Projekt starten</span>
-    <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </a>
-  <button class="nav__burger" id="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
-</header>
-
-<!-- ============ MOBILE MENU OVERLAY ============ -->
-<div class="menu" id="menu" aria-hidden="true">
-  <nav class="menu__links">
-    <a href="#leistungen"><span class="menu__idx">01</span><span class="menu__txt">Leistungen</span></a>
-    <a href="#warum"><span class="menu__idx">02</span><span class="menu__txt">Warum wir</span></a>
-    <a href="#arbeiten"><span class="menu__idx">03</span><span class="menu__txt">Referenzen</span></a>
-    <a href="#team"><span class="menu__idx">04</span><span class="menu__txt">Team</span></a>
-    <a href="#prozess"><span class="menu__idx">05</span><span class="menu__txt">Prozess</span></a>
-  </nav>
-  <a href="#kontakt" class="btn btn--primary btn--xl menu__cta">
-    <span>Projekt starten</span>
-    <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </a>
-  <div class="menu__foot">
-    <a href="mailto:info@opsaltech.com">info@opsaltech.com</a>
-    <span>·</span>
-    <a href="tel:+4917664262666">0176 64262666</a>
-  </div>
-</div>
-
 <!-- ============ HERO ============ -->
-<main>
+<main id="main">
 <section class="hero" id="hero">
   <div class="hero__chart" aria-hidden="true">
     <svg viewBox="0 0 1440 300" preserveAspectRatio="none">
@@ -138,10 +78,10 @@
   </p>
 
   <div class="hero__cta reveal">
-    <a href="#kontakt" class="btn btn--primary magnetic" data-cursor="hover">
+    <button type="button" class="btn btn--primary magnetic" data-contact data-cursor="hover">
       <span>Lass uns starten</span>
       <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
+    </button>
     <a href="#arbeiten" class="btn btn--ghost magnetic" data-cursor="hover">
       <span class="btn__play">▶</span> Referenzen ansehen
     </a>
@@ -188,116 +128,38 @@
     <h2 class="section-title">Alles, was deine Marke<br><span class="grad">digital dominieren</span> lässt.</h2>
   </div>
 
-  <div class="svc">
-    <aside class="svc__rail" aria-hidden="true">
-      <div class="svc__current"></div>
-      <ol class="svc__steps">
-        <div class="svc__line"><span class="svc__fill"></span></div>
-        <li class="svc__step"><span class="svc__dot"></span><span class="svc__num">01</span><span class="svc__label">Webdesign &amp; Development</span></li>
-        <li class="svc__step"><span class="svc__dot"></span><span class="svc__num">02</span><span class="svc__label">Social Media Marketing</span></li>
-        <li class="svc__step"><span class="svc__dot"></span><span class="svc__num">03</span><span class="svc__label">Performance Marketing</span></li>
-        <li class="svc__step"><span class="svc__dot"></span><span class="svc__num">04</span><span class="svc__label">Content Creation</span></li>
-      </ol>
-    </aside>
-
-    <div class="svc__panels">
-      <article class="card svc__panel" data-cursor="hover">
-        <div class="card__num">01</div>
-        <div class="card__icon">
-          <svg viewBox="0 0 24 24" width="34" height="34"><rect x="3" y="4" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 8h18M7 12h6M7 15h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </div>
-        <h3>Webdesign &amp; Development</h3>
-        <p>Conversion-optimierte Websites, die laden bevor man blinzelt. Responsive, SEO-stark und gebaut für Wachstum — kein Template von der Stange.</p>
-        <ul class="card__tags"><li>Next-Gen UI</li><li>SEO</li><li>Performance</li><li>CMS</li></ul>
-        <div class="card__analytics" aria-hidden="true">
-          <div class="viz__kpis">
-            <div class="kpi"><b class="kpi__val" data-to="64" data-prefix="+" data-suffix="%">+0%</b><span class="kpi__k">Conversion</span></div>
-            <div class="kpi"><b class="kpi__val" data-to="1.2" data-decimals="1" data-suffix="s">0.0s</b><span class="kpi__k">Ladezeit</span></div>
-            <div class="kpi"><b class="kpi__val" data-to="96">0</b><span class="kpi__k">Lighthouse</span></div>
-          </div>
-          <div class="viz__chart">
-            <div class="viz__yaxis"><span>100</span><span>50</span><span>0</span></div>
-            <div class="viz__plot">
-              <span class="viz__bar" style="--h:30%"></span><span class="viz__bar" style="--h:44%"></span><span class="viz__bar" style="--h:40%"></span><span class="viz__bar" style="--h:62%"></span><span class="viz__bar" style="--h:80%"></span><span class="viz__bar" style="--h:98%"></span>
-            </div>
-            <div class="viz__xaxis"><span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="card svc__panel" data-cursor="hover">
-        <div class="card__num">02</div>
-        <div class="card__icon">
-          <svg viewBox="0 0 24 24" width="34" height="34"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-        </div>
-        <h3>Social Media Marketing</h3>
-        <p>Strategische Kampagnen auf Instagram, TikTok &amp; LinkedIn. Community-Management und Content, der wirklich klickt — organisch stark und markenbildend.</p>
-        <ul class="card__tags"><li>Strategie</li><li>Community</li><li>Reels</li><li>Trends</li></ul>
-        <div class="card__analytics" aria-hidden="true">
-          <div class="viz__kpis">
-            <div class="kpi"><b class="kpi__val" data-to="2.3" data-decimals="1" data-suffix="×">0.0×</b><span class="kpi__k">Reichweite</span></div>
-            <div class="kpi"><b class="kpi__val" data-to="85" data-prefix="+" data-suffix="%">+0%</b><span class="kpi__k">Engagement</span></div>
-            <div class="kpi"><b class="kpi__val" data-to="480" data-suffix="K">0K</b><span class="kpi__k">Impressionen</span></div>
-          </div>
-          <div class="viz__chart">
-            <div class="viz__yaxis"><span>100</span><span>50</span><span>0</span></div>
-            <div class="viz__plot">
-              <span class="viz__bar" style="--h:22%"></span><span class="viz__bar" style="--h:38%"></span><span class="viz__bar" style="--h:54%"></span><span class="viz__bar" style="--h:50%"></span><span class="viz__bar" style="--h:76%"></span><span class="viz__bar" style="--h:94%"></span>
-            </div>
-            <div class="viz__xaxis"><span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="card svc__panel" data-cursor="hover">
-        <div class="card__num">03</div>
-        <div class="card__icon">
-          <svg viewBox="0 0 24 24" width="34" height="34"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-        </div>
-        <h3>Performance Marketing</h3>
-        <p>Datengetriebene Paid-Kampagnen auf Google &amp; Meta. Wir skalieren, was funktioniert, und stoppen, was Geld verbrennt — für maximalen Return on Ad Spend.</p>
-        <ul class="card__tags"><li>Google Ads</li><li>Meta Ads</li><li>Funnel</li><li>ROAS</li></ul>
-        <div class="card__analytics" aria-hidden="true">
-          <div class="viz__kpis">
-            <div class="kpi"><b class="kpi__val" data-to="4.8" data-decimals="1" data-suffix="×">0.0×</b><span class="kpi__k">ROAS</span></div>
-            <div class="kpi"><b class="kpi__val" data-to="38" data-prefix="−" data-suffix="%">−0%</b><span class="kpi__k">Cost/Lead</span></div>
-            <div class="kpi"><b class="kpi__val" data-to="92" data-prefix="+" data-suffix="%">+0%</b><span class="kpi__k">Leads</span></div>
-          </div>
-          <div class="viz__chart">
-            <div class="viz__yaxis"><span>100</span><span>50</span><span>0</span></div>
-            <div class="viz__plot">
-              <span class="viz__bar" style="--h:26%"></span><span class="viz__bar" style="--h:42%"></span><span class="viz__bar" style="--h:38%"></span><span class="viz__bar" style="--h:60%"></span><span class="viz__bar" style="--h:78%"></span><span class="viz__bar" style="--h:95%"></span>
-            </div>
-            <div class="viz__xaxis"><span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="card svc__panel" data-cursor="hover">
-        <div class="card__num">04</div>
-        <div class="card__icon">
-          <svg viewBox="0 0 24 24" width="34" height="34"><path d="M4 6l16-2v14l-16 2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="9" cy="11" r="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-        </div>
-        <h3>Content Creation</h3>
-        <p>Fotografie, Videoproduktion, Copywriting und Grafikdesign in Kino-Qualität. Wir produzieren Inhalte, die Aufmerksamkeit verdienen — nicht erbetteln.</p>
-        <ul class="card__tags"><li>Foto &amp; Video</li><li>Copy</li><li>Motion</li><li>Grafik</li></ul>
-        <div class="card__analytics" aria-hidden="true">
-          <div class="viz__kpis">
-            <div class="kpi"><b class="kpi__val" data-to="72" data-prefix="+" data-suffix="%">+0%</b><span class="kpi__k">Watchtime</span></div>
-            <div class="kpi"><b class="kpi__val" data-to="4.6" data-decimals="1" data-suffix="%">0.0%</b><span class="kpi__k">CTR</span></div>
-            <div class="kpi"><b class="kpi__val" data-to="1.3" data-decimals="1" data-suffix="M">0.0M</b><span class="kpi__k">Views</span></div>
-          </div>
-          <div class="viz__chart">
-            <div class="viz__yaxis"><span>100</span><span>50</span><span>0</span></div>
-            <div class="viz__plot">
-              <span class="viz__bar" style="--h:34%"></span><span class="viz__bar" style="--h:30%"></span><span class="viz__bar" style="--h:52%"></span><span class="viz__bar" style="--h:64%"></span><span class="viz__bar" style="--h:72%"></span><span class="viz__bar" style="--h:96%"></span>
-            </div>
-            <div class="viz__xaxis"><span>Jan</span><span>Feb</span><span>Mär</span><span>Apr</span><span>Mai</span><span>Jun</span></div>
-          </div>
-        </div>
-      </article>
-    </div>
+  <p class="section-lead reveal" style="text-align:center;max-width:640px;margin:0 auto 54px">Vier Disziplinen, ein Ziel: <strong>messbares Wachstum</strong>. Klick dich in jede Leistung — mit Vorgehen, Umfang und echten Zahlen.</p>
+  <div class="teasers">
+    <a class="teaser reveal" href="/webdesign" data-cursor="hover" aria-label="Webdesign & Development ansehen">
+      <span class="teaser__num">01</span>
+      <span class="teaser__ico"><svg viewBox="0 0 24 24" width="30" height="30"><rect x="3" y="4" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 8h18M7 12h6M7 15h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+      <h3>Webdesign &amp; Development</h3>
+      <p>Conversion-optimierte Websites, die laden bevor man blinzelt — responsive, SEO-stark und gebaut für Wachstum.</p>
+      <span class="teaser__go">Mehr erfahren <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </a>
+    <a class="teaser reveal" href="/social-media" data-cursor="hover" aria-label="Social Media Marketing ansehen">
+      <span class="teaser__num">02</span>
+      <span class="teaser__ico"><svg viewBox="0 0 24 24" width="30" height="30"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span>
+      <h3>Social Media Marketing</h3>
+      <p>Strategische Kampagnen auf Instagram, TikTok &amp; LinkedIn — Community, Reels und Content, der wirklich klickt.</p>
+      <span class="teaser__go">Mehr erfahren <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </a>
+    <a class="teaser reveal" href="/performance-marketing" data-cursor="hover" aria-label="Performance Marketing ansehen">
+      <span class="teaser__num">03</span>
+      <span class="teaser__ico"><svg viewBox="0 0 24 24" width="30" height="30"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+      <h3>Performance Marketing</h3>
+      <p>Datengetriebene Paid-Kampagnen auf Google &amp; Meta — skaliert, was funktioniert, für maximalen Return on Ad Spend.</p>
+      <span class="teaser__go">Mehr erfahren <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </a>
+    <a class="teaser reveal" href="/content-creation" data-cursor="hover" aria-label="Content Creation ansehen">
+      <span class="teaser__num">04</span>
+      <span class="teaser__ico"><svg viewBox="0 0 24 24" width="30" height="30"><path d="M4 6l16-2v14l-16 2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="9" cy="11" r="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span>
+      <h3>Content Creation</h3>
+      <p>Foto, Video, Copy &amp; Grafik in Kino-Qualität — Inhalte, die Aufmerksamkeit verdienen, nicht erbetteln.</p>
+      <span class="teaser__go">Mehr erfahren <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </a>
   </div>
+
 </section>
 
 <!-- ============ WHY / VALUE PROPS ============ -->
@@ -484,6 +346,59 @@
   </div>
 </section>
 
+<!-- ============ MISSION / VISION / WERTE ============ -->
+<section class="mvv" id="mission">
+  <div class="section-head reveal">
+    <span class="eyebrow">06 — Über OPSALTECH</span>
+    <h2 class="section-title">Wofür wir <span class="grad">morgens aufstehen.</span></h2>
+  </div>
+
+  <div class="mvv__duo">
+    <article class="mvv__block reveal" data-cursor="hover">
+      <span class="mvv__ghost" aria-hidden="true">Mission</span>
+      <span class="mvv__label">Mission</span>
+      <p class="mvv__lead">OPSALTECH verwandelt digitale Auftritte in echte <strong>Wachstumsmaschinen</strong>. Wir entwickeln für jede Marke maßgeschneiderte Webdesign-, Social-Media- und Content-Lösungen — ohne Templates, ohne Kompromisse — damit unsere Kunden nicht nur gesehen, sondern zum echten <strong>Umsatztreiber</strong> werden.</p>
+    </article>
+    <article class="mvv__block reveal" data-cursor="hover">
+      <span class="mvv__ghost" aria-hidden="true">Vision</span>
+      <span class="mvv__label">Vision</span>
+      <p class="mvv__lead">Wir wollen die <strong>erste Adresse</strong> für Unternehmen sein, die digital nicht einfach präsent, sondern <strong>unübersehbar</strong> sein wollen. Aus Willich für die ganze Welt — kleine, fokussierte Teams mit Liebe zum Detail erzielen größere Wirkung als anonyme Großagenturen.</p>
+    </article>
+  </div>
+
+  <div class="mvv__values">
+    <h3 class="mvv__vtitle reveal">Unsere Werte</h3>
+    <ol class="mvv__list">
+      <div class="mvv__track" aria-hidden="true"><span class="mvv__trackfill"></span></div>
+      <li class="mvv__value reveal">
+        <span class="mvv__vdot" aria-hidden="true"></span>
+        <span class="mvv__vnum">01</span>
+        <div class="mvv__vbody"><h4>Maßarbeit statt Baukasten</h4><p>Jede Lösung wird individuell für die Marke entwickelt — kein 08/15, kein Template von der Stange.</p></div>
+      </li>
+      <li class="mvv__value reveal">
+        <span class="mvv__vdot" aria-hidden="true"></span>
+        <span class="mvv__vnum">02</span>
+        <div class="mvv__vbody"><h4>Messbarkeit vor Ästhetik-Selbstzweck</h4><p>Schönes Design zählt nur, wenn es konvertiert: mehr Leads, mehr Umsatz, echter ROI.</p></div>
+      </li>
+      <li class="mvv__value reveal">
+        <span class="mvv__vdot" aria-hidden="true"></span>
+        <span class="mvv__vnum">03</span>
+        <div class="mvv__vbody"><h4>Nähe statt Callcenter</h4><p>Kunden sprechen direkt mit den Machern — schnell und auf Augenhöhe.</p></div>
+      </li>
+      <li class="mvv__value reveal">
+        <span class="mvv__vdot" aria-hidden="true"></span>
+        <span class="mvv__vnum">04</span>
+        <div class="mvv__vbody"><h4>Wachstum als Prozess</h4><p>Der Launch ist der Anfang, nicht das Ende: Wir messen, lernen und optimieren kontinuierlich.</p></div>
+      </li>
+      <li class="mvv__value reveal">
+        <span class="mvv__vdot" aria-hidden="true"></span>
+        <span class="mvv__vnum">05</span>
+        <div class="mvv__vbody"><h4>Ehrlichkeit &amp; Transparenz</h4><p>Klare Kommunikation statt leerer Versprechen — vom ersten Gespräch bis zum Reporting.</p></div>
+      </li>
+    </ol>
+  </div>
+</section>
+
 <!-- ============ TESTIMONIALS / SUCCESS ============ -->
 <section class="quote">
   <div class="section-head reveal">
@@ -570,47 +485,13 @@
     </h2>
     <p class="cta__sub">Erzähl uns von deinem Projekt. Wir melden uns innerhalb von 24 Stunden mit ersten Ideen.</p>
 
-    <form class="cta__form" id="contactForm" action="https://formspree.io/f/mnjkrqrz" method="POST" novalidate>
-      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0" />
-      <input type="hidden" name="leistungen" id="svcField" />
-      <div class="field field--full">
-        <input type="text" id="name" name="name" required placeholder=" " autocomplete="name" data-cursor="hover" />
-        <label for="name">Dein Name</label>
-      </div>
-      <div class="field">
-        <input type="email" id="email" name="email" required placeholder=" " autocomplete="email" data-cursor="hover" />
-        <label for="email">E-Mail</label>
-      </div>
-      <div class="field">
-        <input type="tel" id="phone" name="phone" required placeholder=" " autocomplete="tel" data-cursor="hover" />
-        <label for="phone">Telefonnummer</label>
-      </div>
-      <div class="field--full form-svc">
-        <span class="services__label">Woran bist du interessiert? <span class="services__hint">(Mehrfachauswahl möglich)</span></span>
-        <div class="chips" role="group" aria-label="Gewünschte Leistungen">
-          <button type="button" class="chip" data-service="Webdesign" aria-pressed="false">Webdesign</button>
-          <button type="button" class="chip" data-service="Content Creation" aria-pressed="false">Content Creation</button>
-          <button type="button" class="chip" data-service="Performance Marketing" aria-pressed="false">Performance Marketing</button>
-          <button type="button" class="chip" data-service="Social Media" aria-pressed="false">Social Media</button>
-          <button type="button" class="chip" data-service="Anderes" aria-pressed="false">Anderes</button>
-        </div>
-      </div>
-      <div class="field field--full">
-        <textarea id="msg" name="message" rows="3" placeholder=" " data-cursor="hover"></textarea>
-        <label for="msg">Worum geht's? (optional)</label>
-      </div>
-      <label class="consent" for="consent">
-        <input type="checkbox" id="consent" required />
-        <span class="consent__box" aria-hidden="true"></span>
-        <span class="consent__txt">Ich habe die <a href="#" data-legal="datenschutz">Datenschutzerklärung</a> gelesen und stimme der Verarbeitung meiner Angaben zur Bearbeitung meiner Anfrage zu.</span>
-      </label>
-      <button type="submit" class="btn btn--primary btn--xl magnetic" data-cursor="hover">
-        <span class="btn__label">Anfrage senden</span>
+    <div class="hero__cta" style="justify-content:center">
+      <button type="button" class="btn btn--primary btn--xl magnetic" data-contact data-cursor="hover">
+        <span>Kontakt aufnehmen</span>
         <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <p class="cta__success" id="formSuccess" role="status">✦ Danke! Deine Anfrage ist raus — wir melden uns blitzschnell.</p>
-      <p class="cta__error" id="formError" role="alert">⚠ Da ging leider etwas schief. Bitte versuch es erneut oder schreib direkt an <a href="mailto:info@opsaltech.com">info@opsaltech.com</a>.</p>
-    </form>
+      <a href="/kontakt" class="btn btn--ghost btn--xl magnetic" data-cursor="hover">Zur Kontaktseite</a>
+    </div>
 
     <div class="cta__direct">
       <a href="mailto:info@opsaltech.com" data-cursor="hover">info@opsaltech.com</a>
@@ -620,180 +501,6 @@
   </div>
 </section>
 </main>
-
-<!-- ============ FOOTER ============ -->
-<footer class="footer">
-  <div class="footer__big" aria-hidden="true" data-parallax="0.16">OPSALTECH</div>
-  <div class="footer__grid">
-    <div class="footer__col">
-      <span class="footer__brand"><span class="nav__mark"></span>OPSALTECH</span>
-      <p>Digitale Lösungen für modernes Wachstum. Webdesign, Social Media &amp; Content aus Willich.</p>
-    </div>
-    <div class="footer__col">
-      <h4>Adresse</h4>
-      <p>Karlstraße 26a<br>47877 Willich<br>Hoschmand/Springmeier GbR</p>
-    </div>
-    <div class="footer__col">
-      <h4>Kontakt</h4>
-      <a href="mailto:info@opsaltech.com" data-cursor="hover">info@opsaltech.com</a>
-      <a href="tel:+4917664262666" data-cursor="hover">0176 64262666</a>
-    </div>
-    <div class="footer__col">
-      <h4>Social</h4>
-      <a href="https://www.instagram.com/opsaltech/" target="_blank" rel="noopener" data-cursor="hover" aria-label="OPSALTECH auf Instagram (öffnet in neuem Tab)">Instagram ↗</a>
-      <a href="https://www.linkedin.com/company/opsaltech/" target="_blank" rel="noopener" data-cursor="hover" aria-label="OPSALTECH auf LinkedIn (öffnet in neuem Tab)">LinkedIn ↗</a>
-    </div>
-  </div>
-  <div class="footer__bottom">
-    <span>© 2026 OPSALTECH · Hoschmand/Springmeier GbR</span>
-    <div class="footer__legal">
-      <a href="#" data-legal="impressum" data-cursor="hover">Impressum</a>
-      <a href="#" data-legal="datenschutz" data-cursor="hover">Datenschutz</a>
-      <a href="#" data-cookie="open" data-cursor="hover">Cookie-Einstellungen</a>
-    </div>
-    <button class="footer__top magnetic" data-cursor="hover" id="toTop">Nach oben ↑</button>
-  </div>
-</footer>
-
-<!-- ============ COOKIE / CONSENT BANNER ============ -->
-<div class="cookie" id="cookie" role="dialog" aria-label="Datenschutz-Einstellungen" aria-hidden="true">
-  <div class="cookie__inner">
-    <div class="cookie__main">
-      <h3>🍪 Datenschutz &amp; Cookies</h3>
-      <p>Wir verwenden nur <strong>technisch notwendige</strong> Speicherung, damit diese Website funktioniert. Optionale Cookies für Statistik oder Marketing setzen wir ausschließlich mit deiner Einwilligung. Details in der <a href="#" data-legal="datenschutz">Datenschutzerklärung</a>.</p>
-    </div>
-
-    <div class="cookie__settings" id="cookieSettings" hidden>
-      <div class="cookie__cat">
-        <div class="cookie__catinfo"><strong>Notwendig</strong><span>Für den Betrieb der Website erforderlich (z.&nbsp;B. Bedienungshilfe-Einstellungen). Immer aktiv.</span></div>
-        <label class="cookie__switch cookie__switch--locked"><input type="checkbox" checked disabled aria-label="Notwendig – immer aktiv" /><span></span></label>
-      </div>
-      <div class="cookie__cat">
-        <div class="cookie__catinfo"><strong>Statistik</strong><span>Anonyme Reichweitenmessung. Derzeit nicht aktiv – vorbereitet für die Zukunft.</span></div>
-        <label class="cookie__switch"><input type="checkbox" data-cat="statistics" /><span></span></label>
-      </div>
-      <div class="cookie__cat">
-        <div class="cookie__catinfo"><strong>Marketing</strong><span>Personalisierte Inhalte &amp; Anzeigen. Derzeit nicht aktiv – vorbereitet für die Zukunft.</span></div>
-        <label class="cookie__switch"><input type="checkbox" data-cat="marketing" /><span></span></label>
-      </div>
-    </div>
-
-    <div class="cookie__actions">
-      <button type="button" class="cookie__btn cookie__btn--ghost" data-cookie="settings">Einstellungen</button>
-      <button type="button" class="cookie__btn cookie__btn--ghost" data-cookie="reject">Ablehnen</button>
-      <button type="button" class="cookie__btn cookie__btn--primary" data-cookie="accept">Alle akzeptieren</button>
-      <button type="button" class="cookie__btn cookie__btn--primary" data-cookie="save" hidden>Auswahl speichern</button>
-    </div>
-  </div>
-</div>
-
-<!-- ============ BEDIENUNGSHILFE (ACCESSIBILITY) ============ -->
-<div class="a11y">
-  <button class="a11y__toggle" id="a11yToggle" aria-expanded="false" aria-controls="a11yPanel" aria-label="Bedienungshilfe öffnen" title="Bedienungshilfe">
-    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><circle cx="12" cy="4" r="2" fill="currentColor"/><path d="M12 7v6m0 0l-4 5m4-5l4 5M5 8.5c2 1 4.5 1.5 7 1.5s5-.5 7-1.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-  </button>
-  <div class="a11y__panel" id="a11yPanel" role="dialog" aria-label="Bedienungshilfe" aria-hidden="true">
-    <div class="a11y__head">
-      <h3>Bedienungshilfe</h3>
-      <button class="a11y__close" id="a11yClose" aria-label="Bedienungshilfe schließen">
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
-    </div>
-    <div class="a11y__row">
-      <span class="a11y__label">Textgröße</span>
-      <div class="a11y__stepper">
-        <button data-a11y="font-dec" aria-label="Text verkleinern">A−</button>
-        <span class="a11y__val" id="a11yFontVal" aria-live="polite">100%</span>
-        <button data-a11y="font-inc" aria-label="Text vergrößern">A+</button>
-      </div>
-    </div>
-    <button class="a11y__opt" data-a11y="contrast" aria-pressed="false"><span>Hoher Kontrast</span></button>
-    <button class="a11y__opt" data-a11y="links" aria-pressed="false"><span>Links hervorheben</span></button>
-    <button class="a11y__opt" data-a11y="readable" aria-pressed="false"><span>Bessere Lesbarkeit</span></button>
-    <button class="a11y__opt" data-a11y="nomotion" aria-pressed="false"><span>Animationen stoppen</span></button>
-    <button class="a11y__reset" data-a11y="reset">Alles zurücksetzen</button>
-  </div>
-</div>
-
-<!-- ============ LEGAL MODAL ============ -->
-<div class="legal" id="legal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
-  <div class="legal__overlay" data-legal-close></div>
-  <div class="legal__panel" role="document">
-    <div class="legal__head">
-      <h3 id="legalTitle" class="legal__title">Impressum</h3>
-      <button class="legal__close" data-legal-close aria-label="Schließen">
-        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
-    </div>
-    <div class="legal__body" id="legalBody" tabindex="0"></div>
-  </div>
-</div>
-
-<!-- Legal content sources (hidden, injected into the modal) -->
-<div class="legal-src" id="legal-impressum" hidden>
-  <h4>Angaben gemäß § 5 TMG</h4>
-  <p>Hoschmand/Springmeier GbR<br />Karlstraße 26a<br />47877 Willich</p>
-  <h4>Vertreten durch</h4>
-  <p>Niclas Springmeier</p>
-  <h4>Kontakt</h4>
-  <p>E-Mail: <a href="mailto:info@opsaltech.com">info@opsaltech.com</a><br />Telefon: <a href="tel:+4917664262666">0176 64262666</a></p>
-  <h4>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h4>
-  <p>OPSALTECH</p>
-  <h4>Umsatzsteuer-ID</h4>
-  <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />DE363229767</p>
-</div>
-
-<div class="legal-src" id="legal-datenschutz" hidden>
-  <h4>1. Datenschutz auf einen Blick</h4>
-  <h5>Allgemeine Hinweise</h5>
-  <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können. Ausführliche Informationen zum Thema Datenschutz entnehmen Sie unserer unter diesem Text aufgeführten Datenschutzerklärung.</p>
-  <h5>Datenerfassung auf dieser Website</h5>
-  <p><strong>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</strong><br />Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem Abschnitt „Hinweis zur Verantwortlichen Stelle“ in dieser Datenschutzerklärung entnehmen.</p>
-  <p><strong>Wie erfassen wir Ihre Daten?</strong><br />Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z. B. um Daten handeln, die Sie in ein Kontaktformular eingeben. Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z. B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs). Die Erfassung dieser Daten erfolgt automatisch, sobald Sie diese Website betreten.</p>
-  <p><strong>Wofür nutzen wir Ihre Daten?</strong><br />Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden.</p>
-  <p><strong>Welche Rechte haben Sie bezüglich Ihrer Daten?</strong><br />Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen. Wenn Sie eine Einwilligung zur Datenverarbeitung erteilt haben, können Sie diese Einwilligung jederzeit für die Zukunft widerrufen. Außerdem haben Sie das Recht, unter bestimmten Umständen die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen. Des Weiteren steht Ihnen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu. Hierzu sowie zu weiteren Fragen zum Thema Datenschutz können Sie sich jederzeit an uns wenden.</p>
-
-  <h4>2. Hosting</h4>
-  <p>Wir hosten die Inhalte unserer Website bei folgendem Anbieter: Netlify.</p>
-  <p>Anbieter ist die Netlify, Inc., 512 2nd Street, Suite 200, San Francisco, CA 94107, USA. Wenn Sie unsere Website besuchen, erfasst Netlify verschiedene Logfiles inklusive Ihrer IP-Adressen. Details entnehmen Sie der Datenschutzerklärung von Netlify: <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener">netlify.com/privacy</a>.</p>
-  <p>Die Verwendung von Netlify erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Wir haben ein berechtigtes Interesse an einer möglichst zuverlässigen Darstellung unserer Website. Die Datenübermittlung in die USA wird auf das EU-U.S. Data Privacy Framework sowie auf Standardvertragsklauseln gestützt. Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TTDSG. Die Einwilligung ist jederzeit widerrufbar.</p>
-  <p><em>Hinweis: Bitte den tatsächlichen Hosting-Anbieter vor Veröffentlichung bestätigen und ggf. anpassen.</em></p>
-
-  <h4>2a. Schriftarten (lokal gehostet)</h4>
-  <p>Diese Website nutzt zur einheitlichen Darstellung von Schriftarten lokal auf unserem Server gespeicherte Schriften. Es werden <strong>keine Verbindungen zu Servern von Google</strong> (Google Fonts) oder anderen Drittanbietern aufgebaut; Ihre IP-Adresse wird hierfür nicht an Dritte übermittelt.</p>
-
-  <h4>2b. Einbindung externer Inhalte (Live-Vorschau)</h4>
-  <p>Im Bereich „Referenzen“ bieten wir eine optionale Live-Vorschau externer Websites an. Diese externen Inhalte werden <strong>erst nach Ihrem aktiven Klick</strong> geladen (Zwei-Klick-Lösung). Erst dann werden Daten – insbesondere Ihre IP-Adresse – an den jeweiligen Anbieter der externen Website übertragen. Vor dem Klick findet keine Datenübertragung an diese Anbieter statt. Für die geladenen Inhalte gilt die Datenschutzerklärung des jeweiligen Anbieters.</p>
-
-  <h4>3. Allgemeine Hinweise und Pflichtinformationen</h4>
-  <h5>Datenschutz</h5>
-  <p>Die Betreiber dieser Seiten nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung. Wenn Sie diese Website benutzen, werden verschiedene personenbezogene Daten erhoben. Personenbezogene Daten sind Daten, mit denen Sie persönlich identifiziert werden können. Die vorliegende Datenschutzerklärung erläutert, welche Daten wir erheben und wofür wir sie nutzen. Sie erläutert auch, wie und zu welchem Zweck das geschieht. Wir weisen darauf hin, dass die Datenübertragung im Internet (z. B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.</p>
-  <h5>Hinweis zur verantwortlichen Stelle</h5>
-  <p>Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:</p>
-  <p>Hoschmand/Springmeier GbR<br />Karlstraße 26a<br />47877 Willich<br />Telefon: 0176 64262666<br />E-Mail: info@opsaltech.com</p>
-  <p>Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten (z. B. Namen, E-Mail-Adressen o. Ä.) entscheidet.</p>
-  <h5>Speicherdauer</h5>
-  <p>Soweit innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck für die Datenverarbeitung entfällt. Wenn Sie ein berechtigtes Löschersuchen geltend machen oder eine Einwilligung zur Datenverarbeitung widerrufen, werden Ihre Daten gelöscht, sofern wir keine anderen rechtlich zulässigen Gründe für die Speicherung Ihrer personenbezogenen Daten haben (z. B. steuer- oder handelsrechtliche Aufbewahrungsfristen); im letztgenannten Fall erfolgt die Löschung nach Fortfall dieser Gründe.</p>
-  <h5>Allgemeine Hinweise zu den Rechtsgrundlagen der Datenverarbeitung</h5>
-  <p>Sofern Sie in die Datenverarbeitung eingewilligt haben, verarbeiten wir Ihre personenbezogenen Daten auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO bzw. Art. 9 Abs. 2 lit. a DSGVO. Die Einwilligung ist jederzeit widerrufbar. Sind Ihre Daten zur Vertragserfüllung oder zur Durchführung vorvertraglicher Maßnahmen erforderlich, verarbeiten wir Ihre Daten auf Grundlage des Art. 6 Abs. 1 lit. b DSGVO. Des Weiteren verarbeiten wir Ihre Daten, sofern diese zur Erfüllung einer rechtlichen Verpflichtung erforderlich sind, auf Grundlage von Art. 6 Abs. 1 lit. c DSGVO. Die Datenverarbeitung kann ferner auf Grundlage unseres berechtigten Interesses nach Art. 6 Abs. 1 lit. f DSGVO erfolgen.</p>
-  <h5>Widerruf Ihrer Einwilligung zur Datenverarbeitung</h5>
-  <p>Viele Datenverarbeitungsvorgänge sind nur mit Ihrer ausdrücklichen Einwilligung möglich. Sie können eine bereits erteilte Einwilligung jederzeit widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Datenverarbeitung bleibt vom Widerruf unberührt.</p>
-  <h5>Widerspruchsrecht gegen die Datenerhebung in besonderen Fällen sowie gegen Direktwerbung (Art. 21 DSGVO)</h5>
-  <p>Wenn die Datenverarbeitung auf Grundlage von Art. 6 Abs. 1 lit. e oder f DSGVO erfolgt, haben Sie jederzeit das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, gegen die Verarbeitung Ihrer personenbezogenen Daten Widerspruch einzulegen. Werden Ihre personenbezogenen Daten verarbeitet, um Direktwerbung zu betreiben, so haben Sie das Recht, jederzeit Widerspruch gegen die Verarbeitung Sie betreffender personenbezogener Daten zum Zwecke derartiger Werbung einzulegen.</p>
-  <h5>Beschwerderecht bei der zuständigen Aufsichtsbehörde</h5>
-  <p>Im Falle von Verstößen gegen die DSGVO steht den Betroffenen ein Beschwerderecht bei einer Aufsichtsbehörde zu.</p>
-  <h5>SSL- bzw. TLS-Verschlüsselung</h5>
-  <p>Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte eine SSL- bzw. TLS-Verschlüsselung. Bei verschlüsselter Kommunikation können Ihre Zahlungsdaten, die Sie an uns übermitteln, nicht von Dritten mitgelesen werden.</p>
-
-  <h4>4. Datenerfassung auf dieser Website</h4>
-  <h5>Cookies &amp; lokaler Speicher</h5>
-  <p>Diese Website setzt <strong>keine Tracking- oder Marketing-Cookies</strong> und bindet keine Analyse- oder Werbedienste ein. Lediglich für die Funktion „Bedienungshilfe“ werden Ihre gewählten Einstellungen (z. B. Textgröße, Kontrast) ausschließlich <strong>lokal in Ihrem Browser (localStorage)</strong> gespeichert. Diese Angaben verbleiben auf Ihrem Endgerät, werden nicht an uns oder Dritte übertragen und dienen allein Ihrem Bedienkomfort. Sie können diese jederzeit über die Funktion „Alles zurücksetzen“ oder durch Löschen der Browserdaten entfernen. Allgemein können Sie Ihren Browser so einstellen, dass Sie über das Setzen von Cookies informiert werden, Cookies nur im Einzelfall erlauben oder generell ausschließen.</p>
-  <h5>Server-Log-Dateien</h5>
-  <p>Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt (Browsertyp, Betriebssystem, Referrer URL, Hostname, Uhrzeit, IP-Adresse). Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen.</p>
-  <h5>Kontaktformular &amp; Anfrage per E-Mail oder Telefon</h5>
-  <p>Wenn Sie uns per Kontaktformular, E-Mail oder Telefon kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten zwecks Bearbeitung der Anfrage bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter. Die Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt.</p>
-  <p>Für den technischen Versand unseres Kontaktformulars nutzen wir den Dienst <strong>Formspree</strong> (Formspree, Inc., 2093 Philadelphia Pike #1131, Claymont, DE 19703, USA). Wenn Sie das Formular absenden, werden die von Ihnen eingegebenen Daten (Name, E-Mail-Adresse, ausgewählte Leistungen und Nachricht) an Formspree übermittelt, dort verarbeitet und als E-Mail an uns weitergeleitet. Die Verarbeitung erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die Sie vor dem Absenden aktiv erteilen, sowie zur Durchführung vorvertraglicher Maßnahmen (Art. 6 Abs. 1 lit. b DSGVO). Die Übermittlung in die USA wird auf das EU-U.S. Data Privacy Framework bzw. Standardvertragsklauseln gestützt. Weitere Informationen: <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener">formspree.io/legal/privacy-policy</a>. Ihre Einwilligung können Sie jederzeit mit Wirkung für die Zukunft widerrufen.</p>
-</div>
 
 <!-- Structured data for search engines -->
 <script type="application/ld+json">
@@ -854,7 +561,8 @@
 }
 </script>
 
-<script src="script.js?v=20"></script>
-<script type="module" src="js/process-kinetic.js?v=20"></script>
+<script src="/js/chrome.js?v=21"></script>
+<script src="/script.js?v=21"></script>
+<script type="module" src="/js/process-kinetic.js?v=21"></script>
 </body>
 </html>

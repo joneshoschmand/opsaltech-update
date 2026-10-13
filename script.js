@@ -6,20 +6,25 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  /* ---------- PRELOADER ---------- */
+  /* ---------- PRELOADER (home only) ---------- */
   const pre = document.getElementById('preloader');
-  // the wordmark assembles via CSS; dismiss once it has played AND the page loaded
-  let done = false;
-  const finish = () => {
-    if (done) return; done = true;
-    pre.classList.add('done');
-    document.querySelector('.hero').classList.add('in');
-  };
-  let loaded = document.readyState === 'complete', minElapsed = false;
-  const maybe = () => { if (loaded && minElapsed) finish(); };
-  addEventListener('load', () => { loaded = true; maybe(); });
-  setTimeout(() => { minElapsed = true; maybe(); }, 1850);   // let the letters land
-  setTimeout(finish, 3600);                                  // hard safety net
+  const revealHero = () => document.querySelector('.hero')?.classList.add('in');
+  if (pre) {
+    // the wordmark assembles via CSS; dismiss once it has played AND the page loaded
+    let done = false;
+    const finish = () => {
+      if (done) return; done = true;
+      pre.classList.add('done');
+      revealHero();
+    };
+    let loaded = document.readyState === 'complete', minElapsed = false;
+    const maybe = () => { if (loaded && minElapsed) finish(); };
+    addEventListener('load', () => { loaded = true; maybe(); });
+    setTimeout(() => { minElapsed = true; maybe(); }, 1850);   // let the letters land
+    setTimeout(finish, 3600);                                  // hard safety net
+  } else {
+    revealHero();   // subpages have no preloader — reveal the hero immediately
+  }
 
   /* ---------- CUSTOM CURSOR ---------- */
   if (fine) {
@@ -153,7 +158,7 @@
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   // stagger siblings within a grid
-  document.querySelectorAll('.cards, .why__grid, .logos, .tcards, .stats, .team__grid, .steps').forEach(group => {
+  document.querySelectorAll('.cards, .why__grid, .logos, .tcards, .stats, .team__grid, .steps, .mvv__duo, .mvv__list').forEach(group => {
     [...group.querySelectorAll('.reveal')].forEach((el, i) => el.dataset.delay = i * 90);
   });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
@@ -380,6 +385,51 @@
     }
   }
 
+  /* ---------- MISSION/VISION/WERTE: travelling value line ---------- */
+  const mvvList = document.querySelector('.mvv__list');
+  if (mvvList && !reduce) {
+    const track = mvvList.querySelector('.mvv__track');
+    const fill = mvvList.querySelector('.mvv__trackfill');
+    const vals = [...mvvList.querySelectorAll('.mvv__value')];
+    const dots = vals.map(v => v.querySelector('.mvv__vdot'));
+    let tick = false;
+    const paint = () => {
+      tick = false;
+      const tr = track.getBoundingClientRect();
+      const h = clamp(innerHeight * 0.62 - tr.top, 0, tr.height);
+      fill.style.height = h.toFixed(1) + 'px';
+      vals.forEach((v, i) => {
+        const d = dots[i].getBoundingClientRect();
+        v.classList.toggle('lit', (d.top + d.height / 2 - tr.top) <= h + 2);
+      });
+    };
+    const req = () => { if (!tick) { tick = true; requestAnimationFrame(paint); } };
+    addEventListener('scroll', req, { passive: true });
+    addEventListener('resize', req, { passive: true });
+    paint();
+  }
+
+  /* ---------- GENERIC ANALYTICS REVEAL (service pages etc.) ---------- */
+  (function analyticsReveal() {
+    const cards = [...document.querySelectorAll('.card__analytics')]
+      .map(a => a.closest('.card')).filter(c => c && !c.closest('.svc'));
+    if (!cards.length) return;
+    const fmt = (v, dec, pre, suf) => pre + v.toFixed(dec) + suf;
+    const run = (card) => card.querySelectorAll('.kpi__val').forEach(el => {
+      if (el._done) return; el._done = true;
+      const to = parseFloat(el.dataset.to) || 0, dec = parseInt(el.dataset.decimals || 0);
+      const pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+      if (reduce) { el.textContent = fmt(to, dec, pre, suf); return; }
+      let s = null; const dur = 1100;
+      const step = t => { if (!s) s = t; const p = Math.min((t - s) / dur, 1), e = 1 - Math.pow(1 - p, 3); el.textContent = fmt(to * e, dec, pre, suf); if (p < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    });
+    const io = new IntersectionObserver((es) => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('is-active'); run(e.target); io.unobserve(e.target); }
+    }), { threshold: 0.3 });
+    cards.forEach(c => io.observe(c));
+  })();
+
   /* ---------- COUNTERS ---------- */
   const counters = document.querySelectorAll('[data-count]');
   const cObs = new IntersectionObserver((entries) => {
@@ -479,67 +529,125 @@
     }
   }
 
-  /* ---------- CONTACT FORM (Formspree AJAX) ---------- */
-  const form = document.getElementById('contactForm');
-  const success = document.getElementById('formSuccess');
-  const errorMsg = document.getElementById('formError');
-  const chips = form ? [...form.querySelectorAll('.chip')] : [];
-  chips.forEach(c => c.addEventListener('click', () => {
-    c.setAttribute('aria-pressed', c.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
-  }));
-  form?.addEventListener('submit', async e => {
-    e.preventDefault();
-    const consent = form.querySelector('#consent');
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const btnLabel = submitBtn?.querySelector('.btn__label');
-    const name = form.querySelector('#name').value.trim();
-    const email = form.querySelector('#email').value.trim();
-    const phone = form.querySelector('#phone').value.trim();
-    const services = chips.filter(c => c.getAttribute('aria-pressed') === 'true').map(c => c.dataset.service);
+  /* ---------- CONTACT FORMS (Formspree AJAX, multi-instance) ---------- */
+  document.querySelectorAll('.js-contact-form').forEach(form => {
+    const chips = [...form.querySelectorAll('.chip')];
+    const success = form.querySelector('.js-form-success');
+    const errorMsg = form.querySelector('.js-form-error');
+    chips.forEach(c => c.addEventListener('click', () => {
+      c.setAttribute('aria-pressed', c.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    }));
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const consent = form.querySelector('.js-consent');
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const btnLabel = submitBtn?.querySelector('.btn__label');
+      const nameEl = form.querySelector('[name="name"]');
+      const emailEl = form.querySelector('[name="email"]');
+      const phoneEl = form.querySelector('[name="phone"]');
+      const name = nameEl.value.trim(), email = emailEl.value.trim(), phone = phoneEl.value.trim();
+      const services = chips.filter(c => c.getAttribute('aria-pressed') === 'true').map(c => c.dataset.service);
 
-    let invalid = false;
-    const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
-    if (!name || !emailOk || !phone) {
-      form.querySelectorAll('#name,#email,#phone').forEach(f => {
-        if (!f.value.trim() || (f.id === 'email' && !emailOk)) { f.style.borderColor = '#d92b57'; setTimeout(() => f.style.borderColor = '', 1800); }
-      });
-      invalid = true;
-    }
-    if (!consent.checked) {
-      const wrap = consent.closest('.consent');
-      wrap.classList.add('consent--error');
-      setTimeout(() => wrap.classList.remove('consent--error'), 2200);
-      invalid = true;
-    }
-    if (invalid) return;
-
-    // fill hidden fields for Formspree
-    form.querySelector('#svcField').value = services.join(', ');
-    const data = new FormData(form);
-    data.set('_subject', 'Projektanfrage von ' + name + (services.length ? ' — ' + services.join(', ') : ''));
-
-    errorMsg?.classList.remove('show');
-    success.classList.remove('show');
-    submitBtn.disabled = true;
-    const prev = btnLabel ? btnLabel.textContent : '';
-    if (btnLabel) btnLabel.textContent = 'Wird gesendet …';
-    try {
-      const res = await fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
-      if (res.ok) {
-        success.classList.add('show');
-        form.reset();
-        chips.forEach(c => c.setAttribute('aria-pressed', 'false'));
-        setTimeout(() => success.classList.remove('show'), 9000);
-      } else {
-        errorMsg?.classList.add('show');
+      let invalid = false;
+      const emailOk = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+      if (!name || !emailOk || !phone) {
+        [[nameEl, !name], [emailEl, !emailOk], [phoneEl, !phone]].forEach(([el, bad]) => {
+          if (bad) { el.style.borderColor = '#d92b57'; setTimeout(() => el.style.borderColor = '', 1800); }
+        });
+        invalid = true;
       }
-    } catch {
-      errorMsg?.classList.add('show');
-    } finally {
-      submitBtn.disabled = false;
-      if (btnLabel) btnLabel.textContent = prev || 'Anfrage senden';
-    }
+      if (consent && !consent.checked) {
+        const wrap = consent.closest('.consent');
+        wrap?.classList.add('consent--error');
+        setTimeout(() => wrap?.classList.remove('consent--error'), 2200);
+        invalid = true;
+      }
+      if (invalid) return;
+
+      const svcField = form.querySelector('.js-svc');
+      if (svcField) svcField.value = services.join(', ');
+      const data = new FormData(form);
+      data.set('_subject', 'Projektanfrage von ' + name + (services.length ? ' — ' + services.join(', ') : ''));
+
+      errorMsg?.classList.remove('show');
+      success?.classList.remove('show');
+      submitBtn.disabled = true;
+      const prev = btnLabel ? btnLabel.textContent : '';
+      if (btnLabel) btnLabel.textContent = 'Wird gesendet …';
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+        if (res.ok) {
+          success?.classList.add('show');
+          form.reset();
+          chips.forEach(c => c.setAttribute('aria-pressed', 'false'));
+          setTimeout(() => success?.classList.remove('show'), 9000);
+        } else { errorMsg?.classList.add('show'); }
+      } catch { errorMsg?.classList.add('show'); }
+      finally {
+        submitBtn.disabled = false;
+        if (btnLabel) btnLabel.textContent = prev || 'Anfrage senden';
+      }
+    });
   });
+
+  /* ---------- CONTACT MODAL (open from any [data-contact]) ---------- */
+  (function contactModal() {
+    const modal = document.getElementById('contactModal');
+    if (!modal) return;
+    const panel = modal.querySelector('.cmodal__panel');
+    let lastTrigger = null;
+    const open = (trigger) => {
+      lastTrigger = trigger || null;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      panel?.querySelector('input,button,textarea')?.focus({ preventScroll: true });
+    };
+    const close = () => {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+      lastTrigger?.focus?.();
+      lastTrigger = null;
+    };
+    document.querySelectorAll('[data-contact]').forEach(el => el.addEventListener('click', e => {
+      e.preventDefault();
+      if (typeof setMenu === 'function') setMenu(false);
+      open(el);
+    }));
+    modal.querySelectorAll('[data-contact-close]').forEach(el => el.addEventListener('click', close));
+    addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) close(); });
+    window.OPSALopenContact = open;
+  })();
+
+  /* ---------- NAV DROPDOWN (Leistungen) ---------- */
+  (function navDropdown() {
+    const drop = document.querySelector('.nav__drop');
+    if (!drop) return;
+    const toggle = drop.querySelector('.nav__droptoggle');
+    const setOpen = (o) => { drop.classList.toggle('open', o); toggle?.setAttribute('aria-expanded', o ? 'true' : 'false'); };
+    // desktop: hover opens (CSS handles visual); click on toggle navigates to /#leistungen.
+    // keyboard: focus within keeps open; Escape closes.
+    drop.addEventListener('focusin', () => setOpen(true));
+    drop.addEventListener('focusout', (e) => { if (!drop.contains(e.relatedTarget)) setOpen(false); });
+    addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+  })();
+
+  /* ---------- ARTICLE READING PROGRESS ---------- */
+  (function readingProgress() {
+    const article = document.querySelector('.article__body');
+    const bar = document.querySelector('.read-progress');
+    if (!article || !bar) return;
+    const upd = () => {
+      const r = article.getBoundingClientRect();
+      const total = r.height - innerHeight;
+      const p = total > 0 ? clamp((-r.top) / total, 0, 1) : (r.top < 0 ? 1 : 0);
+      bar.style.transform = `scaleX(${p.toFixed(4)})`;
+    };
+    addEventListener('scroll', upd, { passive: true });
+    addEventListener('resize', upd, { passive: true });
+    upd();
+  })();
 
   /* ---------- SCROLL-HIGHLIGHT STATEMENT ---------- */
   const st = document.getElementById('statementText');
